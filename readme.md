@@ -1,7 +1,4 @@
-#include <stdio.h>
-
-// prototype function yang digunakan
-/* Program outline:
+# Program outline:
 MAIN MENU:
 1. Calculate standings of a new competition
 2. See previous competitions' standings
@@ -25,9 +22,5 @@ Menu:
 1. Search for a team
 2. See a team's data
 3. Exit to main menu
-*/
-
-int main() {
-    
-    return 0;
-}
+=====================================================
+MAIN MENU -> 
