@@ -1,12 +1,12 @@
-# Program outline:
-MAIN MENU:
+# Program's outline:
+Proyek Tengah Semester Proglan
+## Main Menu:
 1. Calculate standings of a new competition
 2. See previous competitions' standings
 3. See previous competitions' match history
 3. Help
 4. Exit
-=====================================================
-MAIN MENU -> 1:
+## Main Menu -> 1:
 "Enter the tournament name: {tournament_name}"
 "How many matches are there? {num_of_matches}"
     (show every possible matchup and ask for data)
