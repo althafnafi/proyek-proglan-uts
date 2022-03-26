@@ -24,3 +24,4 @@ Proyek Tengah Semester Proglan
 3. Exit to main menu
 
 ## Main Menu -> 2
+halo
