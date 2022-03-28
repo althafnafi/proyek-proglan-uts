@@ -6,6 +6,13 @@
 #include <windows.h>
 #include <conio.h>
 
+void anyKey()
+{
+    printf("Press any key to continue...");
+    getch();
+    system("cls");
+}
+
 void printHeader(char* string) 
 {
     system("cls");
@@ -69,17 +76,18 @@ void calcStandings(Tour* ptr, int n)
     scanf("%[^\n]s", ptr[n].name);
     fflush(stdin);
     // asking for number of teams that are participating in that tourney
-    printHeader("Input tournament's data");
     while (invalid == 1) 
     {   
+        printHeader("Input tournament's data");
         puts("How many teams participated?");
         printf(">> ");
         scanf("%d", &ptr[n].num_teams);
         fflush(stdin);
         if (ptr[n].num_teams > 10 || ptr[n].num_teams < 2)
         {
-            puts("The number you entered was invalid!");
+            puts("\nThe number you entered was invalid!");
             puts("Enter a minimum of 2 teams and a maximum of 10 teams!");
+            anyKey();
             continue;
         }
         invalid = 0;
@@ -102,7 +110,7 @@ void showTournamentDetails(Tour* ptr, int n)
 {
     int i;
     printHeader("Tournament Details");
-    printf("\n>> %s <<\n", ptr[n].name);
+    printf(">> %s <<\n", ptr[n].name);
     printf("Number of teams: %d\n", ptr[n].num_teams);
     puts("Teams that participated:");
     for (i = 0; i < ptr[n].num_teams; i++) 

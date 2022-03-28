@@ -21,7 +21,7 @@ typedef struct tournaments {
     Match matches[100];
 } Tour;
 
-
+void anyKey();
 void printHeader();
 void mainMenu(Tour* ptr, int n);
 void calcStandings(Tour* ptr, int n);
