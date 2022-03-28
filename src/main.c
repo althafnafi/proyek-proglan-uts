@@ -9,6 +9,7 @@ int main() {
 
     mainMenu(tourPtr, i);
     showTournamentDetails(tourPtr, i);
+    showMatchDetails(tourPtr, i, 0);
 
     return 0;
 }

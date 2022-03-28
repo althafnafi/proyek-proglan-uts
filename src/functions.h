@@ -7,10 +7,11 @@ typedef struct matchDetails {
     char teamB_name[35];
     int teamA_score;
     int teamB_score;
+    int total_goals;
     // all three arrays bellow correspond to each others' indexes
-    char scorer[20][20];
-    char scorer_id[20];
-    int scorer_time[20];
+    char scorer[20][35];
+    char scorer_id[20]; // show which team the scorer is from
+    int goal_time[20];
     // input status;
     int input_status;
 } Match;
@@ -23,11 +24,14 @@ typedef struct tournaments {
     Match matches[100];
 } Tour;
 
+// function prototypes
+int inputArrowKey();
 void anyKey();
 void clearAndPrintHeader(char* str);
 void mainMenu(Tour* ptr, int n);
 void calcStandings(Tour* ptr, int n);
 void showTournamentDetails(Tour* ptr, int n);
+void showMatchDetails(Tour* ptr, int n, int match_num);
 void showPrevStandings(Tour* ptr, int n);
 void showPrevMatchHistory(Tour* ptr, int n);
 void helpMenu(Tour* ptr, int n);

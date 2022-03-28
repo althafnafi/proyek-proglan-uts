@@ -4,6 +4,9 @@ Proyek Tengah Semester Proglan
 - [ ] Add a fun facts menu (top scorer, teams with most goals, etc)
 - [ ] Search for sorting algorithms
 - [ ] Search for searching algorithms
+- [ ] Scroll function between match details (with arrow key)
+- [ ] Sort the goals and scorers based on time of the goal
+- [ ] Add a feature to differentiate goals between different teams
 ## How to compile and run
 ```
 gcc -Wall -c functions.c && gcc -Wall -c main.c && gcc -o program functions.o main.o && program
