@@ -8,7 +8,7 @@ Proyek Tengah Semester Proglan
 4. Exit
 ## Main Menu -> 1:
 - "Enter the tournament name: {tournament_name}"
-- "How many matches are there? {num_of_matches}"
+- "How many teams are there? {num_of_teams}"
 
 - (show every possible matchup and ask for data)
 - "Number of goals: {num_of_goals}"
