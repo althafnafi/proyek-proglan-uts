@@ -57,7 +57,7 @@ void mainMenu(Tour* ptr, int n)
 
 void calcStandings(Tour* ptr, int n) 
 {
-    int i, j;
+    int i, j, k;
     int match_num = 0;
     int total_goals_in_match;
     int invalid = 1;
