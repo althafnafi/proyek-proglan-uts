@@ -1,5 +1,13 @@
 # Program's outline:
 Proyek Tengah Semester Proglan
+## To-Do List:
+- [] Add a fun facts menu (top scorer, teams with most goals, etc)
+- [] Search for sorting algorithms
+- [] Search for searching algorithms
+## How to compile and run
+```
+gcc -Wall -c functions.c && gcc -Wall -c main.c && gcc -o program functions.o main.o && program
+```
 ## Main Menu:
 1. Calculate standings of a new competition
 2. See previous competitions' standings

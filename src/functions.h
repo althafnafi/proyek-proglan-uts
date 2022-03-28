@@ -11,6 +11,8 @@ typedef struct matchDetails {
     char scorer[20][20];
     char scorer_id[20];
     int scorer_time[20];
+    // input status;
+    int input_status;
 } Match;
 
 typedef struct tournaments {
@@ -22,7 +24,7 @@ typedef struct tournaments {
 } Tour;
 
 void anyKey();
-void printHeader();
+void clearAndPrintHeader(char* str);
 void mainMenu(Tour* ptr, int n);
 void calcStandings(Tour* ptr, int n);
 void showTournamentDetails(Tour* ptr, int n);
