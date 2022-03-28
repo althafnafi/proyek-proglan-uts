@@ -1,10 +1,14 @@
 #include <stdio.h>
+#include <stdlib.h>
 #include "functions.h"
 
 int main() {
-    // Tournament* tour = (Tournament*) malloc (sizeof(Tournament));
-    // strcpy(tour[0].matches[5].scorer[1], "Andreas");
+    int i = 0;
 
-    // printf("Name of scorer: %s", tour[0].matches[5].scorer[1]);
+    Tour* tourPtr = (Tour*) malloc (sizeof(Tour));
+
+    mainMenu(tourPtr, i);
+    showTournamentDetails(tourPtr, i);
+
     return 0;
 }
