@@ -274,6 +274,11 @@ void showStandingsTable(Tour* ptr, int n)
     }
 }
 
+void standingsMenu(Tour* ptr, int n)
+{
+    
+}
+
 
 void showTournamentDetails(Tour* ptr, int n) 
 {

@@ -40,22 +40,26 @@ typedef struct teams
 } Team;
 
 // function prototypes
+
+// return the max length of an array of strings
 int maxLength(char arr[][35]);
-
+// return an int based on the arrow keys pressed
 int inputArrowKey();
-
+// when user presses any key the screen will be cleared
 void anyKey();
-
+// clear and print program header + menu header based on the str passed
 void clearAndPrintHeader(char* str);
-
+// to dipslay the main menu of the program
 void mainMenu(Tour* ptr, int n);
-
+// ask the details of a tournament and calculate the standings
 void calcStandings(Tour* ptr, int n);
-
+// print the standings table of a tournament
 void showStandingsTable(Tour* ptr, int n);
-
+// to display the standings menu
+void standingsMenu(Tour* ptr, int n);
+// to print the details of a tournament
 void showTournamentDetails(Tour* ptr, int n);
-
+// to print the details of a match
 void showMatchDetails(Tour* ptr, int n, int match_num, int mode);
 
 void showPrevStandings(Tour* ptr, int n);
