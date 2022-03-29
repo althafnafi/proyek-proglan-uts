@@ -47,10 +47,10 @@ void anyKey()
 void clearAndPrintHeader(char* str) 
 {
     system("cls");
-    printf("=======================================\n");
-    printf("      Football Standings Program\n");
-    printf("           Some sub heading!\n");
-    printf("=======================================\n\n");
+    printf(" =======================================\n");
+    printf("       Football Standings Program\n");
+    printf("            Some sub heading!\n");
+    printf(" =======================================\n\n");
     // printf("<< Football Standings Program >>\n");
     // printf("    << Some sub heading! >>\n\n");
     if (strcmp("", str) != 0)
@@ -144,7 +144,7 @@ void calcStandings(Tour* ptr, int n)
             strcpy(ptr[n].matches[match_num].teamA_name, ptr[n].name_teams[i]);
             strcpy(ptr[n].matches[match_num].teamB_name, ptr[n].name_teams[j]);
             printf(
-                "> %s VS %s <\n",
+                ">> %s VS %s <<\n",
                 ptr[n].matches[match_num].teamA_name,
                 ptr[n].matches[match_num].teamB_name
             );
@@ -188,32 +188,36 @@ void calcStandings(Tour* ptr, int n)
             // asking for goals' details
             for (k = 0; k < ptr[n].matches[match_num].total_goals; k++) 
             {
-                clearAndPrintHeader("Input tournament's data");
-                printf("\nMatch %d:\n", match_num+1);
-                printf(
-                    "> %s VS %s <\n",
-                    ptr[n].matches[match_num].teamA_name,
-                    ptr[n].matches[match_num].teamB_name
-                );
-                printf("Goal No-%d:\n", k+1);
                 strcpy(ptr[n].matches[match_num].scorer[k], "Unknown");
                 ptr[n].matches[match_num].goal_time[k] = -1;
-                if (ptr[n].matches[match_num].input_status == 1 ||
-                    ptr[n].matches[match_num].input_status == 3)
+                if (ptr[n].matches[match_num].input_status != 4)
                 {
-                    printf("Scorer's name:\n");
-                    printf(">> ");
-                    scanf("%[^\n]s", ptr[n].matches[match_num].scorer[k]);
-                    fflush(stdin);
+                    clearAndPrintHeader("Input tournament's data");
+                    printf("\nMatch %d:\n", match_num+1);
+                    printf(
+                        ">> %s VS %s <<\n",
+                        ptr[n].matches[match_num].teamA_name,
+                        ptr[n].matches[match_num].teamB_name
+                    );
+                    printf("Goal No-%d:\n", k+1);                    
+                    if (ptr[n].matches[match_num].input_status == 1 ||
+                        ptr[n].matches[match_num].input_status == 3)
+                    {
+                        printf("Scorer's name:\n");
+                        printf(">> ");
+                        scanf("%[^\n]s", ptr[n].matches[match_num].scorer[k]);
+                        fflush(stdin);
+                    }
+                    if (ptr[n].matches[match_num].input_status == 2 ||
+                        ptr[n].matches[match_num].input_status == 3)
+                    {
+                        printf("When was the goal scored? (minutes into the game):\n");
+                        printf(">> ");
+                        scanf("%d", &ptr[n].matches[match_num].goal_time[k]);
+                        fflush(stdin);
+                    }
                 }
-                if (ptr[n].matches[match_num].input_status == 2 ||
-                    ptr[n].matches[match_num].input_status == 3)
-                {
-                    printf("When was the goal scored? (minutes into the game):\n");
-                    printf(">> ");
-                    scanf("%d", &ptr[n].matches[match_num].goal_time[k]);
-                    fflush(stdin);
-                }                
+                                
             }
             // increment match number
             match_num++;
@@ -257,7 +261,7 @@ void showMatchDetails(Tour* ptr, int n, int match_num, int mode)
     printf(" >> Match Details << \n");
     printf("Tournament: %s\n", ptr[n].name);
     printf(
-        "> %s VS %s <\n",
+        ">> %s VS %s <<\n",
         ptr[n].matches[match_num].teamA_name,
         ptr[n].matches[match_num].teamB_name
     );
