@@ -1,21 +1,21 @@
 # Program's outline:
 Proyek Tengah Semester Proglan
 ## Penilaian Proyek
-- [ ] Ada > 3 function selain main
-- [ ] Penggunaan return type void dan non-void
-- [ ] Penggunaan fungsi tanpa dan dengan parameter
-- [ ] Penggunaan fungsi dengan satu parameter
-- [ ] Penggunaan fungsi dengan lebih dari satu parameter
+- [X] Ada > 3 function selain main
+- [X] Penggunaan return type void dan non-void
+- [X] Penggunaan fungsi tanpa dan dengan parameter
+- [X] Penggunaan fungsi dengan satu parameter
+- [X] Penggunaan fungsi dengan lebih dari satu parameter
 - [ ] Penamaan variabel dan function yang user-friendly
 - [ ] Dekomposisi algoritma kompleks (pake comment2an)
 - [ ] Ada welcome message
 - [ ] Panduan di setiap halaman
 - [ ] Info bila user salah input (error handling)
-- [ ] Ada Header File
-- [ ] Ada function prototype
+- [X] Ada Header File
+- [X] Ada function prototype
 - [ ] Penggunaan rekursi yang tepat
-- [ ] Penggunaan Array 1D yang tepat
-- [ ] Penggunaan Array 2D yang tepat
+- [X] Penggunaan Array 1D yang tepat
+- [X] Penggunaan Array 2D yang tepat
 - [ ] Ada searching algorithm yang tepat
 - [ ] Ada sorting algorithm yang tepat
 - [ ] Tidak ada error/bug dalam program
