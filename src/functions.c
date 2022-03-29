@@ -5,6 +5,23 @@
 #include <conio.h>
 #include "functions.h"
 
+int maxLength(char arr[][35]) // to call this function, array must be 35 in length
+{   
+    int i;
+    int maxL = 0;
+    int tempL = 0;
+    int size = 20; // size -> is the max element of the arrays in the struct
+    for (i = 0; i < size; i++)
+    {
+        tempL  = strlen(arr[i]);
+        if (maxL < tempL)
+        {
+            maxL = tempL;
+        }
+    }
+    return maxL;
+}
+
 int inputArrowKey()
 {
     int input = getch();
@@ -226,6 +243,13 @@ void calcStandings(Tour* ptr, int n)
 
 }
 
+void showStandingsTable(Tour* ptr, int n)
+{   
+    int maxTeamL = maxLength(ptr[n].name_teams);
+    printf("\tTeam Name");
+}
+
+
 void showTournamentDetails(Tour* ptr, int n) 
 {
     int i;
@@ -254,6 +278,8 @@ void showMatchDetails(Tour* ptr, int n, int match_num, int mode)
     }
     // print the header
     clearAndPrintHeader("");
+    // mode -> 1    ; enable scrolling through matches in a tournament
+    // mode -> 0    ; disables scrolling
     if (mode == 1)
     {
         printf("\t<<\t%d/%d\t>>\n\n", match_num+1, ptr[n].num_matches);
@@ -272,7 +298,8 @@ void showMatchDetails(Tour* ptr, int n, int match_num, int mode)
     {
         printf(" ");
     }
-    printf("%d  -  %d", 
+    printf(
+        "%d  -  %d", 
         ptr[n].matches[match_num].teamA_score,
         ptr[n].matches[match_num].teamB_score
     );
@@ -295,15 +322,15 @@ void showMatchDetails(Tour* ptr, int n, int match_num, int mode)
             break;
         }
     }
-
+    // in mode -> 1, enables scrolling with arrow keys
     if (mode == 1)
     {
-        switch(inputArrowKey()) // ask for arrow key input 
+        switch(inputArrowKey()) // ask for arrow key input
         {
-            case 1: case 2: // go to the left 
+            case 1: case 2: // go to the left page
                 showMatchDetails(ptr, n, match_num-1, mode);
                 break;
-            case 3: case 4: // go to the right
+            case 3: case 4: // go to the right page
                 showMatchDetails(ptr, n, match_num+1, mode);
                 break;
             case (-1): // press 'q' to exit

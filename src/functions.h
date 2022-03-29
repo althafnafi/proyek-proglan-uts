@@ -25,16 +25,19 @@ typedef struct tournaments {
 } Tour;
 
 // function prototypes
+int maxLength(char arr[][35]);
 int inputArrowKey();
 void anyKey();
 void clearAndPrintHeader(char* str);
 void mainMenu(Tour* ptr, int n);
 void calcStandings(Tour* ptr, int n);
+void showStandingsTable(Tour* ptr, int n);
 void showTournamentDetails(Tour* ptr, int n);
 void showMatchDetails(Tour* ptr, int n, int match_num, int mode);
 void showPrevStandings(Tour* ptr, int n);
 void showPrevMatchHistory(Tour* ptr, int n);
 void helpMenu(Tour* ptr, int n);
 void exitProgram(Tour* ptr, int n);
+void showStandingsTable(Tour* ptr, int n);
 
 #endif
