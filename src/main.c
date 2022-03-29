@@ -6,10 +6,9 @@ int main() {
     int i = 0;
 
     Tour* tourPtr = (Tour*) malloc (sizeof(Tour));
-
     mainMenu(tourPtr, i);
     showTournamentDetails(tourPtr, i);
-    showMatchDetails(tourPtr, i, 0);
+    showMatchDetails(tourPtr, i, 0, 1);
 
     return 0;
 }

@@ -1,5 +1,26 @@
 # Program's outline:
 Proyek Tengah Semester Proglan
+## Penilaian Proyek
+- [ ] Ada > 3 function selain main
+- [ ] Penggunaan return type void dan non-void
+- [ ] Penggunaan fungsi tanpa dan dengan parameter
+- [ ] Penggunaan fungsi dengan satu parameter
+- [ ] Penggunaan fungsi dengan lebih dari satu parameter
+- [ ] Penamaan variabel dan function yang user-friendly
+- [ ] Dekomposisi algoritma kompleks (pake comment2an)
+- [ ] Ada welcome message
+- [ ] Panduan di setiap halaman
+- [ ] Info bila user salah input (error handling)
+- [ ] Ada Header File
+- [ ] Ada function prototype
+- [ ] Penggunaan rekursi yang tepat
+- [ ] Penggunaan Array 1D yang tepat
+- [ ] Penggunaan Array 2D yang tepat
+- [ ] Ada searching algorithm yang tepat
+- [ ] Ada sorting algorithm yang tepat
+- [ ] Tidak ada error/bug dalam program
+- [ ] Tujuan aplikasi tercapai
+- [ ] Penilaian video (wajah, pembagian, penjelasan, semangat, waktu)
 ## To-Do List:
 - [ ] Add a fun facts menu (top scorer, teams with most goals, etc)
 - [ ] Search for sorting algorithms
@@ -7,11 +28,12 @@ Proyek Tengah Semester Proglan
 - [ ] Scroll function between match details (with arrow key)
 - [ ] Sort the goals and scorers based on time of the goal
 - [ ] Add a feature to differentiate goals between different teams
+- [ ] Add error handling to all getch() and scanf()
 ## How to compile and run
 ```
 gcc -Wall -c functions.c && gcc -Wall -c main.c && gcc -o program functions.o main.o && program
 ```
-## Main Menu:
+## Main Menu:1
 1. Calculate standings of a new competition
 2. See previous competitions' standings
 3. See previous competitions' match history
@@ -35,4 +57,3 @@ gcc -Wall -c functions.c && gcc -Wall -c main.c && gcc -o program functions.o ma
 3. Exit to main menu
 
 ## Main Menu -> 2
-halo

@@ -1,10 +1,9 @@
-#include "functions.h"
-
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <windows.h>
 #include <conio.h>
+#include "functions.h"
 
 int inputArrowKey()
 {
@@ -12,6 +11,10 @@ int inputArrowKey()
     if (input == 0 || input == 0xE0)
     {
         input = getch();
+    }
+    else if (input == 113) // 'q' to quit
+    {
+        return (-1);
     }
         switch(input)
         {
@@ -30,7 +33,8 @@ int inputArrowKey()
             default:
                 return inputArrowKey();
                 break;
-        }
+        } 
+    
 }
 
 void anyKey()
@@ -43,9 +47,14 @@ void anyKey()
 void clearAndPrintHeader(char* str) 
 {
     system("cls");
-    printf("<< Football Standings Program >>\n");
-    printf("    << Some sub heading! >>");
-    printf("\n\n >>> %s <<<\n", str);
+    printf("=======================================\n");
+    printf("      Football Standings Program\n");
+    printf("           Some sub heading!\n");
+    printf("=======================================\n\n");
+    // printf("<< Football Standings Program >>\n");
+    // printf("    << Some sub heading! >>\n\n");
+    if (strcmp("", str) != 0)
+        printf(" >>> %s <<<\n", str);
 }
 
 void mainMenu(Tour* ptr, int n) 
@@ -135,7 +144,7 @@ void calcStandings(Tour* ptr, int n)
             strcpy(ptr[n].matches[match_num].teamA_name, ptr[n].name_teams[i]);
             strcpy(ptr[n].matches[match_num].teamB_name, ptr[n].name_teams[j]);
             printf(
-                ">> %s VS %s <<\n",
+                "> %s VS %s <\n",
                 ptr[n].matches[match_num].teamA_name,
                 ptr[n].matches[match_num].teamB_name
             );
@@ -182,7 +191,7 @@ void calcStandings(Tour* ptr, int n)
                 clearAndPrintHeader("Input tournament's data");
                 printf("\nMatch %d:\n", match_num+1);
                 printf(
-                    ">> %s VS %s <<\n",
+                    "> %s VS %s <\n",
                     ptr[n].matches[match_num].teamA_name,
                     ptr[n].matches[match_num].teamB_name
                 );
@@ -227,28 +236,43 @@ void showTournamentDetails(Tour* ptr, int n)
     printf("Number of matches: %d\n", ptr[n].num_matches);
 }
 
-void showMatchDetails(Tour* ptr, int n, int match_num)
-{
+void showMatchDetails(Tour* ptr, int n, int match_num, int mode)
+{   
     int i;
+    // error handling if match number goes out of range
+    if (match_num < 0) // goes under min
+    {
+        match_num = 0;
+    } 
+    else if (match_num >= ptr[n].num_matches) // goes above max
+    {
+        match_num = ptr[n].num_matches - 1;
+    }
     // print the header
-    clearAndPrintHeader("Match Details");
+    clearAndPrintHeader("");
+    if (mode == 1)
+    {
+        printf("\t<<\t%d/%d\t>>\n\n", match_num+1, ptr[n].num_matches);
+    }
+    printf(" >> Match Details << \n");
     printf("Tournament: %s\n", ptr[n].name);
     printf(
-        ">> %s VS %s <<\n",
+        "> %s VS %s <\n",
         ptr[n].matches[match_num].teamA_name,
         ptr[n].matches[match_num].teamB_name
     );
-    // add 2 extra space
-    printf("  ");
-    // print as long as team A's name above
+    // add an extra space
+    printf(" ");
+    // print as long as team A's name above for formatting purposes
     for (i = 0; i < strlen(ptr[n].matches[match_num].teamA_name); i++)
     {
         printf(" ");
     }
-    printf("%d - %d", 
+    printf("%d  -  %d", 
         ptr[n].matches[match_num].teamA_score,
         ptr[n].matches[match_num].teamB_score
     );
+    // print goal details
     printf("\n\nGoal Details:\n");
     for (i = 0; i < ptr[n].matches[match_num].total_goals; i++)
     {   
@@ -261,10 +285,29 @@ void showMatchDetails(Tour* ptr, int n, int match_num)
             }
             printf("\n");
         } 
-        else
+        else // if input status -> 4, dont print any details
         {
-            printf("-");
+            printf("-\n");
             break;
+        }
+    }
+
+    if (mode == 1)
+    {
+        switch(inputArrowKey()) // ask for arrow key input 
+        {
+            case 1: case 2: // go to the left 
+                showMatchDetails(ptr, n, match_num-1, mode);
+                break;
+            case 3: case 4: // go to the right
+                showMatchDetails(ptr, n, match_num+1, mode);
+                break;
+            case (-1): // press 'q' to exit
+                exit(0);
+                // return;
+                break;
+            default:
+                break;
         }
     }
 }
