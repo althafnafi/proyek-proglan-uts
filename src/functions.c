@@ -245,8 +245,33 @@ void calcStandings(Tour* ptr, int n)
 
 void showStandingsTable(Tour* ptr, int n)
 {   
-    int maxTeamL = maxLength(ptr[n].name_teams);
-    printf("\tTeam Name");
+    int i, j;
+    char header_str[40];
+    strcpy(header_str, ptr[n].name);
+    strcat(header_str, " Table");
+    clearAndPrintHeader(header_str);
+    int printL = (maxLength(ptr[n].name_teams)+1);
+
+    // printing header for table
+    // printing the team name header
+    for (i = 0; i < (printL-9)/2; i++)
+        printf(" ");
+    printf("Team Name");
+    for (i = 0; i < ((printL-9)/2)+2; i++)
+        printf(" ");
+    // printing other headers
+    printf("   GP    W    D    L    F    A    GD    P");
+    printf("\n===========================================================================");
+    // printing the details for each team
+    for (i = 0; i < ptr[n].num_teams; i++)
+    {
+        // printing the team name column
+        printf("\n%s", ptr[n].name_teams[i]);
+        for (j = 0; j < printL-strlen(ptr[n].name_teams[i]); j++)
+        {
+            printf(" ");
+        }
+    }
 }
 
 
