@@ -33,9 +33,9 @@ typedef struct teams
     int wins;
     int draws;
     int losses;
-    int goalsFor;
-    int goalsAgainst;
-    int goalDiff;
+    int goals_for;
+    int goals_against;
+    int goal_diff;
     int points;
 } Team;
 
