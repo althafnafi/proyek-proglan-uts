@@ -5,6 +5,60 @@
 #include <conio.h>
 #include "functions.h"
 
+void mergeArr(char arr[][35], int l, int m, int r)
+{
+    int i, j, k;
+    int n1 = m - l + 1;
+    int n2 =  r - m;
+    char L[n1][35], R[n2][35];
+
+    for (i = 0; i < n1; i++)
+        strcpy(L[i], arr[l + i]);
+    for (j = 0; j < n2; j++)
+        strcpy(R[j], arr[m + 1+ j]);
+
+    i = 0;
+    j = 0;
+    k = l;
+    while (i < n1 && j < n2)
+    {
+        if (strcmp(L[i], R[j]) <= 0)
+        {
+            strcpy(arr[k], L[i]);
+            i++;
+        }
+        else
+        {
+            strcpy(arr[k], R[j]);
+            j++;
+        }
+        k++;
+    }
+    while (i < n1)
+    {
+        strcpy(arr[k], L[i]);
+        i++;
+        k++;
+    }
+    while (j < n2)
+    {
+        strcpy(arr[k], R[j]);
+        j++;
+        k++;
+    }
+}
+
+void mergeSort(char arr[][35], int l, int r)
+{
+    if (l < r)
+    {
+        int m = l+(r-l)/2;
+        mergeSort(arr, l, m);
+        mergeSort(arr, m+1, r);
+        mergeArr(arr, l, m, r);
+    }
+}
+
 int maxLength(char arr[][35]) // to call this function, array must be 35 in length
 {   
     int i;

@@ -41,6 +41,10 @@ typedef struct teams
 
 // function prototypes
 
+//merge two subarrays for merge sort
+void mergeArr(char arr[][35], int l, int m, int r);
+// mergesort function
+void mergeSort(char arr[][35], int l, int r);
 // return the max length of an array of strings
 int maxLength(char arr[][35]);
 // return an int based on the arrow keys pressed

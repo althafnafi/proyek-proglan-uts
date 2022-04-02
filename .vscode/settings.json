@@ -3,6 +3,7 @@
         "functions.h": "c",
         "typeinfo": "c",
         "windows.h": "c",
-        "string.h": "c"
+        "string.h": "c",
+        "stdio.h": "c"
     }
 }
