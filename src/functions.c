@@ -5,60 +5,6 @@
 #include <conio.h>
 #include "functions.h"
 
-void mergeArr(char arr[][35], int l, int m, int r)
-{
-    int i, j, k;
-    int n1 = m - l + 1;
-    int n2 =  r - m;
-    char L[n1][35], R[n2][35];
-
-    for (i = 0; i < n1; i++)
-        strcpy(L[i], arr[l + i]);
-    for (j = 0; j < n2; j++)
-        strcpy(R[j], arr[m + 1+ j]);
-
-    i = 0;
-    j = 0;
-    k = l;
-    while (i < n1 && j < n2)
-    {
-        if (strcmp(L[i], R[j]) <= 0)
-        {
-            strcpy(arr[k], L[i]);
-            i++;
-        }
-        else
-        {
-            strcpy(arr[k], R[j]);
-            j++;
-        }
-        k++;
-    }
-    while (i < n1)
-    {
-        strcpy(arr[k], L[i]);
-        i++;
-        k++;
-    }
-    while (j < n2)
-    {
-        strcpy(arr[k], R[j]);
-        j++;
-        k++;
-    }
-}
-
-void mergeSort(char arr[][35], int l, int r)
-{
-    if (l < r)
-    {
-        int m = l+(r-l)/2;
-        mergeSort(arr, l, m);
-        mergeSort(arr, m+1, r);
-        mergeArr(arr, l, m, r);
-    }
-}
-
 int maxLength(char arr[][35]) // to call this function, array must be 35 in length
 {   
     int i;
@@ -330,7 +276,101 @@ void showStandingsTable(Tour* ptr, int n)
 
 void standingsMenu(Tour* ptr, int n)
 {
-    
+    int i, j;
+    char target[35];
+    int target_index;
+    int index_arr[10] = {-1};
+    //showStandingsTable
+    printf("Searching Options\n");
+    printf("1. Search by team name\n");
+    printf("2. Search by ranking\n");
+    printf("Enter your choice :\n");
+    printf(">> ");
+    switch(getch())
+    {
+        case '1':
+            printf("Enter the name of the team : ");
+            printf(">> ");
+            fflush(stdin);
+            scanf("%[^\n]s", target);
+            fflush(stdin);
+            search(ptr[n].name_teams, target, index_arr, ptr[n].num_teams);
+            for (i = 0; i < 10; i++)
+            {
+                if (index_arr[i] != -1)
+                {
+                    showTeamDetails(ptr, n,  i);
+                }
+            }
+            break;
+        case '2':
+            printf("Enter your desired ranking position : \n");
+            printf(">> ");
+            scanf("%d", &target_index);
+            target_index--;
+            break;
+        default :
+            clearAndPrintHeader("");
+            printf("Invalid input\n");
+            anyKey();
+            standingsMenu(ptr, n);
+            return;
+    }
+    if (target_index < 0 || target_index > ptr[n].num_teams)
+    {
+        clearAndPrintHeader("");
+        printf("\nTeam not found!\n");
+        anyKey();
+        standingsMenu(ptr, n);
+    }
+    else 
+    {
+        showTeamDetails(ptr, n, target_index);
+    }
+}
+
+void showTeamDetails(Tour* ptr, int n, int team_index)
+{
+    // clear screen and print header
+    // GP    W    D    L    F    A    GD    P
+    clearAndPrintHeader("Team Details");
+    printf("%s\n", ptr[n].name_teams[team_index]);
+    printf("Games Played: %d\n", ptr[n].teams[team_index].games_played);
+    printf("Wins: %d\n", ptr[n].teams[team_index].wins);
+    printf("Draws: %d\n", ptr[n].teams[team_index].draws);
+    printf("Losses: %d\n", ptr[n].teams[team_index].losses);
+    printf("Goals For: %d\n", ptr[n].teams[team_index].goals_for);
+    printf("Goals Against: %d\n", ptr[n].teams[team_index].goals_against);
+    printf("Goal Difference: %d\n", ptr[n].teams[team_index].goal_difference);
+    printf("Points: %d\n", ptr[n].teams[team_index].points);
+}
+
+void search(char arr[][35], char target[], int return_index[10], int size) {
+    int i, j, count = 0;
+    for (i = 0; i < size; i++) {
+        for (j = 0; j < strlen(arr[i]); j++) {
+            if (count == 0) {
+                // membandingkan dua karakter
+                // jika sama akan count++
+                if (arr[i][j] == target[count]) {
+                    count++; // jika ketemu maka count++
+                } 
+            } else if (count != 0) { // kondisi saat count bukan 0
+                // jika kedua karakter sama maka akan count++
+                if (arr[i][j] == target[count]) { 
+                    count++;
+                } else if (arr[i][j] != target[count]) {
+                    count = 0;
+                }
+            }
+            if (count == strlen(target)) { //jika count == jumlah target
+                count = 0;
+                printf("Nama yang mirip: %s\n", arr[i]);
+                return_index[i] = 1;
+                break;
+            }
+        }
+    }
 }
 
 

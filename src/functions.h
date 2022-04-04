@@ -11,11 +11,24 @@ typedef struct matchDetails
     int total_goals;
     // all three arrays bellow correspond to each others' indexes
     char scorer[20][35];
-    char scorer_id[20]; // show which team the scorer is from
+    char scorer_id[20]; // show which the team scorer is from
     int goal_time[20];
     // input status;
     int input_status;
 } Match;
+
+typedef struct teams 
+{
+    char name[35];
+    int games_played;
+    int wins;
+    int draws;
+    int losses;
+    int goals_for;
+    int goals_against;
+    int goal_difference;
+    int points;
+} Team;
 
 typedef struct tournaments 
 {
@@ -24,27 +37,11 @@ typedef struct tournaments
     char name_teams[10][35];
     int num_matches;
     Match matches[100];
+    Team teams[10];
 } Tour;
-
-typedef struct teams 
-{
-    char name[35];
-    int played;
-    int wins;
-    int draws;
-    int losses;
-    int goals_for;
-    int goals_against;
-    int goal_diff;
-    int points;
-} Team;
 
 // function prototypes
 
-//merge two subarrays for merge sort
-void mergeArr(char arr[][35], int l, int m, int r);
-// mergesort function
-void mergeSort(char arr[][35], int l, int r);
 // return the max length of an array of strings
 int maxLength(char arr[][35]);
 // return an int based on the arrow keys pressed
@@ -61,6 +58,10 @@ void calcStandings(Tour* ptr, int n);
 void showStandingsTable(Tour* ptr, int n);
 // to display the standings menu
 void standingsMenu(Tour* ptr, int n);
+
+void showTeamDetails(Tour* ptr, int n, int team_index);
+//searching algorithm used
+void search(char arr[][35], char target[], int return_index[10], int size);
 // to print the details of a tournament
 void showTournamentDetails(Tour* ptr, int n);
 // to print the details of a match
