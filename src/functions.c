@@ -100,7 +100,7 @@ void mainMenu(Tour* ptr, int n)
             // helpMenu();
             break;
         case '5':
-            // exitProgram();
+            exitMenu();
             break;
         default:
             mainMenu(ptr, n);
@@ -276,10 +276,8 @@ void showStandingsTable(Tour* ptr, int n)
 
 void standingsMenu(Tour* ptr, int n)
 {
-    int i, j;
-    char target[35];
+    int i;
     int target_index;
-    int index_arr[10] = {-1};
     //showStandingsTable
     printf("Searching Options\n");
     printf("1. Search by team name\n");
@@ -289,19 +287,7 @@ void standingsMenu(Tour* ptr, int n)
     switch(getch())
     {
         case '1':
-            printf("Enter the name of the team : ");
-            printf(">> ");
-            fflush(stdin);
-            scanf("%[^\n]s", target);
-            fflush(stdin);
-            search(ptr[n].name_teams, target, index_arr, ptr[n].num_teams);
-            for (i = 0; i < 10; i++)
-            {
-                if (index_arr[i] != -1)
-                {
-                    showTeamDetails(ptr, n,  i);
-                }
-            }
+            // search by team name
             break;
         case '2':
             printf("Enter your desired ranking position : \n");
@@ -331,8 +317,6 @@ void standingsMenu(Tour* ptr, int n)
 
 void showTeamDetails(Tour* ptr, int n, int team_index)
 {
-    // clear screen and print header
-    // GP    W    D    L    F    A    GD    P
     clearAndPrintHeader("Team Details");
     printf("%s\n", ptr[n].name_teams[team_index]);
     printf("Games Played: %d\n", ptr[n].teams[team_index].games_played);
@@ -345,8 +329,8 @@ void showTeamDetails(Tour* ptr, int n, int team_index)
     printf("Points: %d\n", ptr[n].teams[team_index].points);
 }
 
-void search(char arr[][35], char target[], int return_index[10], int size) {
-    int i, j, count = 0;
+void search(char arr[][35], char target[], int return_index[11], int size) {
+    int i, j, count = 0, count_index = 0, flag = 0;
     for (i = 0; i < size; i++) {
         for (j = 0; j < strlen(arr[i]); j++) {
             if (count == 0) {
@@ -363,16 +347,22 @@ void search(char arr[][35], char target[], int return_index[10], int size) {
                     count = 0;
                 }
             }
+            // IF SUBSTRING IS FOUND 
             if (count == strlen(target)) { //jika count == jumlah target
+                printf("%s\n", arr[i]);
+                return_index[count_index] = i+1;
+                count_index++;
                 count = 0;
-                printf("Nama yang mirip: %s\n", arr[i]);
-                return_index[i] = 1;
+                flag = 1;
                 break;
             }
         }
     }
+    if (flag != 1)
+    {
+        return_index[10] = -1;
+    }
 }
-
 
 void showTournamentDetails(Tour* ptr, int n) 
 {
@@ -449,6 +439,7 @@ void showMatchDetails(Tour* ptr, int n, int match_num, int mode)
     // in mode -> 1, enables scrolling with arrow keys
     if (mode == 1)
     {
+        printf("\n(Press arrow keys to scroll through matches or press q to exit...)");
         switch(inputArrowKey()) // ask for arrow key input
         {
             case 1: case 2: // go to the left page
@@ -458,11 +449,55 @@ void showMatchDetails(Tour* ptr, int n, int match_num, int mode)
                 showMatchDetails(ptr, n, match_num+1, mode);
                 break;
             case (-1): // press 'q' to exit
-                exit(0);
+                mainMenu(ptr, n);
                 // return;
                 break;
             default:
                 break;
         }
+
+    }
+}
+
+void showPrevMatchHistory(Tour* ptr, int n)
+{
+
+}
+
+void exitMenu()
+{
+    clearAndPrintHeader("");
+    printf("Thank you for using this program!\n");
+    exit(0);
+}
+
+void searchAndPickTeam(Tour* ptr, int n)
+{
+    int i, count = 0;
+    char target_name[35];
+    int index_team[11] = {0};
+    clearAndPrintHeader("Search for team");
+    printf("Search for name of the team: ");
+    printf(">> ");
+    scanf("%[^\n]s", target_name);
+    search(ptr[n].name_teams, target_name, index_team, ptr[n].num_teams);
+    if (index_team[10] == -1)
+    {
+        printf("Team not found!\n");
+    }
+    else
+    {
+        printf("Below is the list of teams that match your search:\n");
+        for (i = 0; i < ptr[n].num_teams; i++)
+        {
+            if (index_team[i] == 1)
+            {
+                printf(" %d. %s\n", count+1, ptr[n].name_teams[i]);
+            }
+        }
+        printf("\nChoose a team: ");
+        printf(">> ");
+        scanf("%d", &i);
+        showTeamDetails(ptr, n, i-1);
     }
 }

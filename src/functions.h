@@ -19,7 +19,6 @@ typedef struct matchDetails
 
 typedef struct teams 
 {
-    char name[35];
     int games_played;
     int wins;
     int draws;
@@ -61,15 +60,17 @@ void standingsMenu(Tour* ptr, int n);
 
 void showTeamDetails(Tour* ptr, int n, int team_index);
 //searching algorithm used
-void search(char arr[][35], char target[], int return_index[10], int size);
+void search(char arr[][35], char target[], int return_index[11], int size);
 // to print the details of a tournament
 void showTournamentDetails(Tour* ptr, int n);
 // to print the details of a match
 void showMatchDetails(Tour* ptr, int n, int match_num, int mode);
 
-void showPrevStandings(Tour* ptr, int n);
 void showPrevMatchHistory(Tour* ptr, int n);
+
+void showPrevStandings(Tour* ptr, int n);
+
 void helpMenu(Tour* ptr, int n);
-void exitProgram(Tour* ptr, int n);
+void exitMenu();
 
 #endif
