@@ -4,11 +4,12 @@
 #include "functions.h"
 
 int main() {
-    int i = 0;
+    int n = 0;
     Tour* tourPtr = (Tour*) malloc (sizeof(Tour));
 
-    mainMenu(tourPtr, i);
-    sortTeamsByRank(tourPtr, i, "desc");
+    mainMenu(tourPtr, n);
+    showMatchDetails(tourPtr, n, 0, "scroll");
+    
 
     return 0;
 }

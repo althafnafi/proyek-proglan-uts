@@ -93,7 +93,7 @@ void mainMenu(Tour* ptr, int n)
     puts("2. See previous competitions' standings");
     puts("3. See previous competitions' match history");
     puts("4. Help");
-    puts("5. Exit");
+    puts("5. Exit the program");
 
     // get the input from the user
     puts("Enter the desired menu: ");
@@ -354,6 +354,7 @@ void standingsMenu(Tour* ptr, int n)
     printf("Searching Options\n");
     printf("1. Search by team name\n");
     printf("2. Search by ranking\n");
+    printf("3. Help\n");
     printf("Enter your choice :\n");
     printf(">> ");
     switch(getch())
@@ -382,6 +383,9 @@ void standingsMenu(Tour* ptr, int n)
                 break;
             }
             showTeamDetails(ptr, n, target_index);
+            break;
+        case '3':
+            // go to help menu
             break;
         default :
             clearAndPrintHeader("");
@@ -467,7 +471,7 @@ void showTournamentDetails(Tour* ptr, int n)
     printf("Number of matches: %d\n", ptr[n].num_matches);
 }
 
-void showMatchDetails(Tour* ptr, int n, int match_num, int mode)
+void showMatchDetails(Tour* ptr, int n, int match_num, char* mode)
 {   
     int i;
     // error handling if match number goes out of range
@@ -483,7 +487,7 @@ void showMatchDetails(Tour* ptr, int n, int match_num, int mode)
     clearAndPrintHeader("");
     // mode -> 1    ; enable scrolling through matches in a tournament
     // mode -> 0    ; disables scrolling
-    if (mode == 1)
+    if (strcmp(mode, "scroll") == 0)
     {
         printf("\t<<\t%d/%d\t>>\n\n", match_num+1, ptr[n].num_matches);
     }
@@ -526,7 +530,7 @@ void showMatchDetails(Tour* ptr, int n, int match_num, int mode)
         }
     }
     // in mode -> 1, enables scrolling with arrow keys
-    if (mode == 1)
+    if (strcmp(mode, "scroll") == 0)
     {
         printf("\n(Press arrow keys to scroll through matches or press q to exit...)");
         switch(inputArrowKey()) // ask for arrow key input
@@ -550,7 +554,7 @@ void showMatchDetails(Tour* ptr, int n, int match_num, int mode)
 
 void showPrevMatchHistory(Tour* ptr, int n)
 {
-
+    
 }
 
 int searchAndPickTeam(Tour* ptr, int n)

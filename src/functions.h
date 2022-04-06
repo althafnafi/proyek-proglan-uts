@@ -66,7 +66,7 @@ void search(char arr[][35], char target[], int return_index[11], int size);
 // to print the details of a tournament
 void showTournamentDetails(Tour* ptr, int n);
 // to print the details of a match
-void showMatchDetails(Tour* ptr, int n, int match_num, int mode);
+void showMatchDetails(Tour* ptr, int n, int match_num, char* mode);
 
 void showPrevMatchHistory(Tour* ptr, int n);
 
@@ -79,6 +79,7 @@ int getIndexFromRank(Tour* ptr, int n, int team_rank);
 void sortTeamsByRank(Tour* ptr, int n, char* mode);
 
 void helpMenu(Tour* ptr, int n);
+
 void exitMenu();
 
 #endif
