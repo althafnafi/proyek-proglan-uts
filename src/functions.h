@@ -19,13 +19,13 @@ typedef struct matchDetails
 
 typedef struct teams 
 {
-    int games_played;
-    int wins;
-    int draws;
-    int losses;
-    int goals_for;
-    int goals_against;
-    int goal_difference;
+    int games_played; // increment
+    int wins; // if 
+    int draws; // if 
+    int losses; // if
+    int goals_for; // increment
+    int goals_against; // increment
+    int goal_difference; // goals_for - goals_against
     int points;
 } Team;
 
@@ -69,6 +69,8 @@ void showMatchDetails(Tour* ptr, int n, int match_num, int mode);
 void showPrevMatchHistory(Tour* ptr, int n);
 
 void showPrevStandings(Tour* ptr, int n);
+
+void searchAndPickTeam(Tour* ptr, int n);
 
 void helpMenu(Tour* ptr, int n);
 void exitMenu();
