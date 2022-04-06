@@ -59,12 +59,12 @@ int inputArrowKey()
     {
         return inputArrowKey();
     }
+    return 0;
 }
 
 void anyKey()
 {
     // if a user presses any key -> clear the screen
-    printf("Press any key to continue...");
     system("pause");
     system("cls");
 }
@@ -168,6 +168,7 @@ void calcStandings(Tour* ptr, int n)
         printf("Team %d:\n", i+1);
         printf(">> ");
         scanf("%[^\n]s", ptr[n].name_teams[i]);
+        strcpy(ptr[n].teams[i].name, ptr[n].name_teams[i]);
         fflush(stdin);
     }
 
@@ -348,6 +349,7 @@ void showStandingsTable(Tour* ptr, int n)
 void standingsMenu(Tour* ptr, int n)
 {
     int target_index;
+    int target_rank;
     //showStandingsTable
     printf("Searching Options\n");
     printf("1. Search by team name\n");
@@ -357,31 +359,36 @@ void standingsMenu(Tour* ptr, int n)
     switch(getch())
     {
         case '1':
-            // search by team name
+            target_index = searchAndPickTeam(ptr, n);
+            showTeamDetails(ptr, n, target_index);
+            // if ()
+            // {
+            //     printf("\nInvalid ranking position\n");
+            //     anyKey();
+            //     standingsMenu(ptr, n);
+            //     break;
+            // }
             break;
         case '2':
             printf("Enter your desired ranking position : \n");
             printf(">> ");
-            scanf("%d", &target_index);
-            target_index--;
+            scanf("%d", &target_rank);
+            target_index = getIndexFromRank(ptr, n, target_rank);
+            if (target_index == -1)
+            {
+                printf("\nInvalid ranking position\n");
+                anyKey();
+                standingsMenu(ptr, n);
+                break;
+            }
+            showTeamDetails(ptr, n, target_index);
             break;
         default :
             clearAndPrintHeader("");
             printf("Invalid input\n");
             anyKey();
             standingsMenu(ptr, n);
-            return;
-    }
-    if (target_index < 0 || target_index > ptr[n].num_teams)
-    {
-        clearAndPrintHeader("");
-        printf("\nTeam not found!\n");
-        anyKey();
-        standingsMenu(ptr, n);
-    }
-    else 
-    {
-        showTeamDetails(ptr, n, target_index);
+            break;
     }
 }
 
@@ -389,7 +396,7 @@ void showTeamDetails(Tour* ptr, int n, int team_index)
 {
     clearAndPrintHeader("Team Details");
     printf("Tournament: %s\n", ptr[n].name);
-    printf(">> %s <<\n", ptr[n].name_teams[team_index]);
+    printf(">> %s <<\n", ptr[n].teams[team_index].name);
     printf(" - Games Played: %d\n", ptr[n].teams[team_index].games_played);
     printf(" - Wins: %d\n", ptr[n].teams[team_index].wins);
     printf(" - Draws: %d\n", ptr[n].teams[team_index].draws);
@@ -401,25 +408,34 @@ void showTeamDetails(Tour* ptr, int n, int team_index)
 }
 
 void search(char arr[][35], char target[], int return_index[11], int size) {
+    // this search function will return the index of the team in the array
+    // if the substring is found
     int i, j, count = 0, count_index = 0, flag = 0;
     for (i = 0; i < size; i++) {
         for (j = 0; j < strlen(arr[i]); j++) {
-            if (count == 0) {
-                // membandingkan dua karakter
-                // jika sama akan count++
-                if (arr[i][j] == target[count]) {
-                    count++; // jika ketemu maka count++
-                } 
-            } else if (count != 0) { // kondisi saat count bukan 0
-                // jika kedua karakter sama maka akan count++
-                if (arr[i][j] == target[count]) { 
+            if (count == 0) 
+            {
+                // if the first character of the string is the same as the target
+                // increment count
+                if (arr[i][j] == target[count]) 
+                    count++; 
+            } 
+            else if (count != 0) 
+            {   
+                // if the character is the same as the target for the second time and so on
+                // increment count again
+                if (arr[i][j] == target[count]) 
                     count++;
-                } else if (arr[i][j] != target[count]) {
+                // if the character is not the same as the target
+                // reset count and start over
+                else if (arr[i][j] != target[count]) 
                     count = 0;
-                }
+            
             }
-            // IF SUBSTRING IS FOUND 
-            if (count == strlen(target)) { //jika count == jumlah target
+            // If the substring is found in the string
+            // return the array containing the index of the team
+            if (count == strlen(target)) 
+            {
                 return_index[count_index] = i+1;
                 count_index++;
                 count = 0;
@@ -428,6 +444,9 @@ void search(char arr[][35], char target[], int return_index[11], int size) {
             }
         }
     }
+    // flag = 0 means the target is not found
+    // and will set the last index of the return index
+    // which is the status element of the array to -1
     if (flag != 1)
     {
         return_index[10] = -1;
@@ -534,23 +553,30 @@ void showPrevMatchHistory(Tour* ptr, int n)
 
 }
 
-void searchAndPickTeam(Tour* ptr, int n)
+int searchAndPickTeam(Tour* ptr, int n)
 {
-    int i, count = 0;
+    int input = 0;
+    int i, count;
     char target_name[35];
     int index_team[11] = {0};
     clearAndPrintHeader("Search for a team");
     printf("Search for name of the team:\n");
     printf(">> ");
     scanf("%[^\n]s", target_name);
-    clearAndPrintHeader("Search for a team");
     search(ptr[n].name_teams, target_name, index_team, ptr[n].num_teams);
+
     if (index_team[10] == -1)
     {
+        clearAndPrintHeader("Search for a team");
         printf("Team not found!\n");
+        anyKey();
+        return -1;
     }
-    else
+
+    while (input < 1 || input > count)
     {
+        count = 0;
+        clearAndPrintHeader("Search for a team");
         printf("Below is the list of teams that match your search:\n");
         for (i = 0; i < ptr[n].num_teams; i++)
         {
@@ -560,21 +586,110 @@ void searchAndPickTeam(Tour* ptr, int n)
                 printf(" %d. %s\n", count, ptr[n].name_teams[index_team[i]-1]);
             }
         }
-        for (i = 0; i < 11; i++)
-        {
-            printf("%d ", index_team[i]);
-        }
+
         printf("\nChoose a team:\n");
         printf(">> ");
-        scanf("%d", &i);
-        showTeamDetails(ptr, n, index_team[i-1]-1);
+        scanf("%d", &input);
+
+        if (input < 1 || input > count)
+        {
+            printf("\nInvalid input!\n");
+            anyKey();
+        }
+        else
+        {
+            return index_team[input-1]-1;
+        }
     }
+    return -1;  
+}
+
+int getIndexFromRank(Tour* ptr, int n, int team_rank)
+{   
+    int i;
+    for (i = 0; i < ptr[n].num_teams; i++)
+    {
+        if (ptr[n].teams[i].rank == team_rank)
+        {
+            return i;
+        }
+    }
+    return -1;
 }
 
 void exitMenu()
 {
     clearAndPrintHeader("");
     printf("Thank you for using this program!\n");
+    printf("See you next time");
     exit(0);
 }
+
+void sortTeamsByRank(Tour* ptr, int n, char* mode)
+{
+    Team temp;
+    int i, j;
+    char tempStr[35];
+    int size = ptr[n].num_teams;
+    // sort based on points
+    // using bubble sort algorithm
+
+    // we use 2 for loops to loop through all of the comparisons
+    for (i = 0; i < size; i++)
+    {
+        for (j = 0; j < size-i-1; j++)
+        {
+            // if "asc" was passed as a parameter, sort in ascending order
+            if (strcmp(mode, "asc") == 0)
+            {
+                // to sort in ascending order
+                // check 2 adjacents elements of the arr containing points of a team
+                // if the first element is greater than the second element then swap
+                // do it until all the big numbers bubble up to the right
+                // and the array becomes sorted
+                if (ptr[n].teams[j].points > ptr[n].teams[j+1].points)
+                {
+                    temp = ptr[n].teams[j];
+                    ptr[n].teams[j] = ptr[n].teams[j+1];
+                    ptr[n].teams[j+1] = temp;
+                    
+                    strcpy(tempStr, ptr[n].name_teams[j]);
+                    strcpy(ptr[n].name_teams[j], ptr[n].name_teams[j+1]);
+                    strcpy(ptr[n].name_teams[j+1], tempStr);
+                }
+            }
+            // if "desc" is passed as a parameter, sort in descending order
+            else if (strcmp(mode, "desc") == 0)
+            {
+                // to sort in descending order
+                // check 2 adjacents elements of the arr containing points of a team
+                // if the first element is smaller than the second element then swap
+                // do it until all the small numbers bubble up to the right
+                // and the array becomes sorted
+                if (ptr[n].teams[j].points < ptr[n].teams[j+1].points)
+                {
+                    temp = ptr[n].teams[j];
+                    ptr[n].teams[j] = ptr[n].teams[j+1];
+                    ptr[n].teams[j+1] = temp;
+
+                    strcpy(tempStr, ptr[n].name_teams[j]);
+                    strcpy(ptr[n].name_teams[j], ptr[n].name_teams[j+1]);
+                    strcpy(ptr[n].name_teams[j+1], tempStr);
+                }
+            }
+            // if something else is passed, just get out
+            else
+            {
+                // just so it's easier to debug
+                printf("Invalid parameter for sort!\n");
+                system("pause");
+                exit(0);
+            }
+        }
+    }
+
+}
+
+
+
 

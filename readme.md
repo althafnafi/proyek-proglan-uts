@@ -16,18 +16,18 @@ Proyek Tengah Semester Proglan
 - [ ] Penggunaan rekursi yang tepat
 - [X] Penggunaan Array 1D yang tepat
 - [X] Penggunaan Array 2D yang tepat
-- [ ] Ada searching algorithm yang tepat
+- [X] Ada searching algorithm yang tepat
 - [ ] Ada sorting algorithm yang tepat
 - [ ] Tidak ada error/bug dalam program
 - [ ] Tujuan aplikasi tercapai
 - [ ] Penilaian video (wajah, pembagian, penjelasan, semangat, waktu)
 ## To-Do List:
 - [ ] Add a fun facts menu (top scorer, teams with most goals, etc)
-- [ ] Search for sorting algorithms
-- [ ] Search for searching algorithms
-- [ ] Scroll function between match details (with arrow key)
+- [] Search for sorting algorithms
+- [X] Search for searching algorithms
+- [X] Scroll function between match details (with arrow key)
 - [ ] Sort the goals and scorers based on time of the goal
-- [ ] Add a feature to differentiate goals between different teams
+- [X] Add a feature to differentiate goals between different teams
 - [ ] Add error handling to all getch() and scanf()
 ## How to compile and run
 ```
