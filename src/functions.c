@@ -318,40 +318,80 @@ void calcStandings(Tour* ptr, int n)
 void showStandingsTable(Tour* ptr, int n)
 {   
     int i, j;
-    char header_str[40];
-    strcpy(header_str, ptr[n].name);
-    strcat(header_str, " Table");
-    clearAndPrintHeader(header_str);
-    int printL = (maxLength(ptr[n].name_teams)+1);
+    int printL;
+
+    if (maxLength(ptr[n].name_teams) <= 10)
+        printL = 11;
+    else
+        printL = (maxLength(ptr[n].name_teams));
 
     // printing header for table
     // printing the team name header
-    for (i = 0; i < (printL-9)/2; i++)
+    printf("+");
+    for (i = 0; i < printL+53; i++)
+    {
+        printf("-");
+    }
+    printf("+\n");
+    printf("|");
+
+    // print "Team Name and the spaces beside it based on the max length of the team name"
+    for (i = 0; i < 1+(printL-9)/2; i++)
         printf(" ");
     printf("Team Name");
-    for (i = 0; i < ((printL-9)/2)+2; i++)
+    for (i = 0; i < 1+(printL-9)/2; i++)
         printf(" ");
+
     // printing other headers
-    printf("   GP    W    D    L    F    A    GD    P");
-    printf("\n===========================================================================");
+    printf("%9s%5s%5s%5s%6s%6s%6s%8s |","GP", "W", "D", "L", "GF", "GA", "GD", "Pts");
+
+    
+    printf("\n+");
+    for (i = 0; i < printL+53; i++)
+    {
+        printf("=");
+    }
+    printf("+");
     // printing the details for each team
     for (i = 0; i < ptr[n].num_teams; i++)
     {
         // printing the team name column
-        printf("\n%s", ptr[n].name_teams[i]);
+        printf("\n");
+        printf("| %s", ptr[n].name_teams[i]);
         for (j = 0; j < printL-strlen(ptr[n].name_teams[i]); j++)
         {
             printf(" ");
         }
+        // printing the other columns
+        printf("%10d%5d%5d%5d%6d%6d%6d%7d  |",
+            ptr[n].teams[i].games_played,
+            ptr[n].teams[i].wins,
+            ptr[n].teams[i].draws,
+            ptr[n].teams[i].losses,
+            ptr[n].teams[i].goals_for,
+            ptr[n].teams[i].goals_against,
+            ptr[n].teams[i].goal_difference,
+            ptr[n].teams[i].points
+        );
     }
+    printf("\n+");
+    for (i = 0; i < printL+53; i++)
+    {
+        printf("-");
+    }
+    printf("+\n");
 }
 
 void standingsMenu(Tour* ptr, int n)
 {
     int target_index;
     int target_rank;
-    //showStandingsTable
-    printf("Searching Options\n");
+    char header_str[40];
+    strcpy(header_str, ptr[n].name);
+    strcat(header_str, " Table");
+    clearAndPrintHeader(header_str);
+    showStandingsTable(ptr, n);
+    printf("\nSearching Options\n");
     printf("1. Search by team name\n");
     printf("2. Search by ranking\n");
     printf("3. Help\n");
@@ -529,7 +569,7 @@ void showMatchDetails(Tour* ptr, int n, int match_num, char* mode)
             break;
         }
     }
-    // in mode -> 1, enables scrolling with arrow keys
+    // in mode -> "scroll", enables scrolling with arrow keys
     if (strcmp(mode, "scroll") == 0)
     {
         printf("\n(Press arrow keys to scroll through matches or press q to exit...)");
@@ -693,7 +733,4 @@ void sortTeamsByRank(Tour* ptr, int n, char* mode)
     }
 
 }
-
-
-
 

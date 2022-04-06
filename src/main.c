@@ -8,8 +8,7 @@ int main() {
     Tour* tourPtr = (Tour*) malloc (sizeof(Tour));
 
     mainMenu(tourPtr, n);
-    showMatchDetails(tourPtr, n, 0, "scroll");
-    
+    standingsMenu(tourPtr, n);
 
     return 0;
 }
