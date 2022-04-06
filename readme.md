@@ -22,6 +22,7 @@ Proyek Tengah Semester Proglan
 - [ ] Tujuan aplikasi tercapai
 - [ ] Penilaian video (wajah, pembagian, penjelasan, semangat, waktu)
 ## To-Do List:
+- [ ] Comment every single thing
 - [ ] Add a fun facts menu (top scorer, teams with most goals, etc)
 - [ ] Search for sorting algorithms
 - [X] Search for searching algorithms
