@@ -4,11 +4,10 @@
 #include "functions.h"
 
 int main() {
-    int n = 0;
+    int n = -1;
     Tour* tourPtr = (Tour*) malloc (sizeof(Tour));
 
     mainMenu(tourPtr, n);
-    standingsMenu(tourPtr, n);
 
     return 0;
 }

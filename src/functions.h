@@ -76,9 +76,15 @@ int searchAndPickTeam(Tour* ptr, int n);
 
 int getIndexFromRank(Tour* ptr, int n, int team_rank);
 
+void swapAdjacentTeams(Tour* ptr, int n, int j);
+
 void sortTeamsByRank(Tour* ptr, int n, char* mode);
 
 void helpMainMenu(Tour* ptr, int n);
+
+void helpStandingsMenu();
+
+void moreInfo(Tour* ptr, int n);
 
 void exitMenu();
 
