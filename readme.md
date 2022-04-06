@@ -23,7 +23,7 @@ Proyek Tengah Semester Proglan
 - [ ] Penilaian video (wajah, pembagian, penjelasan, semangat, waktu)
 ## To-Do List:
 - [ ] Add a fun facts menu (top scorer, teams with most goals, etc)
-- [] Search for sorting algorithms
+- [ ] Search for sorting algorithms
 - [X] Search for searching algorithms
 - [X] Scroll function between match details (with arrow key)
 - [ ] Sort the goals and scorers based on time of the goal

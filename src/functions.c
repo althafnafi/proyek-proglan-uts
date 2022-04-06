@@ -182,21 +182,25 @@ void calcStandings(Tour* ptr, int n)
     fflush(stdin);
 
     // asking for number of teams that are participating in that tourney
-    while (invalid == 1) 
+    do
     {   
         clearAndPrintHeader("Input tournament's data");
         puts("How many teams participated?");
         printf(">> ");
+        fflush(stdin);
         scanf("%d", &ptr[n].num_teams);
-        if (ptr[n].num_teams > 10 || ptr[n].num_teams < 2)
+        if (ptr[n].num_teams < 2 || ptr[n].num_teams > 10)
         {
             puts("\nThe number you entered was invalid!");
             puts("Enter a minimum of 2 teams and a maximum of 10 teams!");
             anyKey();
-            continue;
+            invalid = 1;
         }
-        invalid = 0;
-    }
+        else
+        {
+            invalid = 0;
+        }
+    } while (invalid == 1);
 
     // calculate number of matches that are going to be played in that tourney
     ptr[n].num_matches = ptr[n].num_teams * (ptr[n].num_teams - 1)/2;
