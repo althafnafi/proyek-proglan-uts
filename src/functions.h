@@ -78,7 +78,7 @@ int getIndexFromRank(Tour* ptr, int n, int team_rank);
 
 void sortTeamsByRank(Tour* ptr, int n, char* mode);
 
-void helpMenu(Tour* ptr, int n);
+void helpMainMenu(Tour* ptr, int n);
 
 void exitMenu();
 

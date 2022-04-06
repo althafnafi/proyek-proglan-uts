@@ -672,14 +672,6 @@ int getIndexFromRank(Tour* ptr, int n, int team_rank)
     return -1;
 }
 
-void exitMenu()
-{
-    clearAndPrintHeader("");
-    printf("Thank you for using this program!\n");
-    printf("See you next time\n");
-    exit(0);
-}
-
 void sortTeamsByRank(Tour* ptr, int n, char* mode)
 {
     Team temp;
@@ -751,4 +743,17 @@ void sortTeamsByRank(Tour* ptr, int n, char* mode)
         else if (strcmp(mode, "desc") == 0)
             ptr[n].teams[i].rank = i+1;
     }
+}
+
+void helpMainMenu(Tour* ptr, int n)
+{
+    
+}
+
+void exitMenu()
+{
+    clearAndPrintHeader("");
+    printf("Thank you for using this program!\n");
+    printf("See you next time\n");
+    exit(0);
 }
