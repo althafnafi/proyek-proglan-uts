@@ -99,7 +99,7 @@ void mainMenu(Tour* ptr, int n)
     puts("Enter the desired menu: ");
     printf(">> ");
     int choice = getch();
-    // 
+    // will call functions based on the input
     switch(choice) 
     {
         case '1':
