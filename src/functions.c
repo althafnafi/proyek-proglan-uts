@@ -3,6 +3,7 @@
 #include <string.h>
 #include <windows.h>
 #include <conio.h>
+#include <math.h>
 #include "functions.h"
 
 int maxLength(char arr[][35]) // to call this function, array must be 35 in length
@@ -328,7 +329,7 @@ void showStandingsTable(Tour* ptr, int n)
     // printing header for table
     // printing the team name header
     printf("+");
-    for (i = 0; i < printL+53; i++)
+    for (i = 0; i < printL+50; i++)
     {
         printf("-");
     }
@@ -336,18 +337,18 @@ void showStandingsTable(Tour* ptr, int n)
     printf("|");
 
     // print "Team Name and the spaces beside it based on the max length of the team name"
-    for (i = 0; i < 1+(printL-9)/2; i++)
+    for (i = 0; i < floor(((float)printL-9)/2); i++)
         printf(" ");
     printf("Team Name");
-    for (i = 0; i < 1+(printL-9)/2; i++)
+    for (i = 0; i < ceil(((float)printL-9)/2); i++)
         printf(" ");
 
     // printing other headers
-    printf("%9s%5s%5s%5s%6s%6s%6s%8s |","GP", "W", "D", "L", "GF", "GA", "GD", "Pts");
+    printf("%8s%5s%5s%5s%6s%6s%6s%8s |","GP", "W", "D", "L", "GF", "GA", "GD", "Pts");
 
     
     printf("\n+");
-    for (i = 0; i < printL+53; i++)
+    for (i = 0; i < printL+50; i++)
     {
         printf("=");
     }
@@ -363,7 +364,7 @@ void showStandingsTable(Tour* ptr, int n)
             printf(" ");
         }
         // printing the other columns
-        printf("%10d%5d%5d%5d%6d%6d%6d%7d  |",
+        printf("%7d%5d%5d%5d%6d%6d%6d%7d  |",
             ptr[n].teams[i].games_played,
             ptr[n].teams[i].wins,
             ptr[n].teams[i].draws,
@@ -375,7 +376,7 @@ void showStandingsTable(Tour* ptr, int n)
         );
     }
     printf("\n+");
-    for (i = 0; i < printL+53; i++)
+    for (i = 0; i < printL+50; i++)
     {
         printf("-");
     }
@@ -395,6 +396,7 @@ void standingsMenu(Tour* ptr, int n)
     printf("1. Search by team name\n");
     printf("2. Search by ranking\n");
     printf("3. Help\n");
+    printf("4. More info about this program\n");
     printf("Enter your choice :\n");
     printf(">> ");
     switch(getch())
@@ -427,6 +429,9 @@ void standingsMenu(Tour* ptr, int n)
         case '3':
             // go to help menu
             break;
+        case '4':
+            // more info menu
+            break;
         default :
             clearAndPrintHeader("");
             printf("Invalid input\n");
@@ -439,7 +444,7 @@ void standingsMenu(Tour* ptr, int n)
 void showTeamDetails(Tour* ptr, int n, int team_index)
 {
     clearAndPrintHeader("Team Details");
-    printf("Tournament: %s\n", ptr[n].name);
+    printf("\nTournament: %s\n", ptr[n].name);
     printf(">> %s <<\n", ptr[n].teams[team_index].name);
     printf(" - Games Played: %d\n", ptr[n].teams[team_index].games_played);
     printf(" - Wins: %d\n", ptr[n].teams[team_index].wins);
@@ -665,7 +670,7 @@ void exitMenu()
 {
     clearAndPrintHeader("");
     printf("Thank you for using this program!\n");
-    printf("See you next time");
+    printf("See you next time\n");
     exit(0);
 }
 
