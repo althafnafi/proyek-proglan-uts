@@ -7,6 +7,7 @@ int main() {
     int n = -1;
     Tour* tourPtr = (Tour*) malloc (sizeof(Tour));
 
+    welcomeScreen();
     mainMenu(tourPtr, n);
 
     return 0;

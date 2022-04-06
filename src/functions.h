@@ -43,32 +43,34 @@ typedef struct tournaments
 
 // function prototypes
 
+// print the welcome screen of the program
+void welcomeScreen();
+// print loading bar
+void showLoadingBar();
 // return the max length of an array of strings
 int maxLength(char arr[][35]);
-// return an int based on the arrow keys pressed
+// return an integer based on the arrow keys pressed
 int inputArrowKey();
 // when user presses any key the screen will be cleared
 void anyKey();
-// clear and print program header + menu header based on the str passed
+// clear and print program header + menu header based on the string passed
 void clearAndPrintHeader(char* str);
 // to dipslay the main menu of the program
 void mainMenu(Tour* ptr, int n);
-// ask the details of a tournament and calculate the standings
+// get the details of a tournament and calculate standings
 void calcStandings(Tour* ptr, int n);
 // print the standings table of a tournament
 void showStandingsTable(Tour* ptr, int n);
 // to display the standings menu
-void standingsMenu(Tour* ptr, int n);
-
+void standingsMenu(Tour* ptr, int n, int tour_index);
+// print the details of a team in a tournament
 void showTeamDetails(Tour* ptr, int n, int team_index);
-//searching algorithm used
+// searcrh teams using a substring and return the index of the teams
 void search(char arr[][35], char target[], int return_index[11], int size);
 // to print the details of a tournament
 void showTournamentDetails(Tour* ptr, int n);
 // to print the details of a match
 void showMatchDetails(Tour* ptr, int n, int match_num, char* mode);
-
-void showPrevMatchHistory(Tour* ptr, int n);
 
 void showPrevStandings(Tour* ptr, int n);
 
@@ -84,7 +86,7 @@ void helpMainMenu(Tour* ptr, int n);
 
 void helpStandingsMenu();
 
-void moreInfo(Tour* ptr, int n);
+void aboutMenu(Tour* ptr, int n);
 
 void exitMenu();
 

@@ -3,8 +3,46 @@
 #include <string.h>
 #include <windows.h>
 #include <conio.h>
-#include <math.h>
+#include <math.h> // for ceil and floor
 #include "functions.h"
+
+void welcomeScreen()
+{
+    system("cls");
+    printf("\n");
+    printf("  +===============================================+\n");
+    printf("  |      << Football Standings Calculator >>      |\n");
+    printf("  |                   Made by:                    |\n");
+    printf("  |       Adrien Ardra Ramadhan (2106731485)      |\n");
+    printf("  |         Althaf Nafi Anwar (2106634881)        |\n");
+    printf("  |          Muhammad Suhaili (2106731535)        |\n");
+    printf("  +===============================================+\n");
+    printf("\n");
+    showLoadingBar();
+    system("cls");
+}
+
+void showLoadingBar()
+{  
+    int i;
+    char a = 177, b = 219;
+  
+    printf("  Loading . . .\n\n");
+    printf("  ");
+  
+    // print empty loading bar
+    for (i = 0; i < 48; i++)
+        printf("%c", a);
+  
+    // print the loading bar
+    printf("\r");
+    printf("  ");
+    for (int i = 0; i < 48; i++) {
+        printf("%c", b);
+    
+        Sleep(35);
+    }
+}
 
 int maxLength(char arr[][35]) // to call this function, array must be 35 in length
 {   
@@ -75,7 +113,7 @@ void clearAndPrintHeader(char* str)
     system("cls");
     printf(" =======================================\n");
     printf("       Football Standings Program\n");
-    printf("            Some sub heading!\n");
+    printf("               Made easy!\n");
     printf(" =======================================\n\n");
     // printf("<< Football Standings Program >>\n");
     // printf("    << Some sub heading! >>\n\n");
@@ -90,11 +128,10 @@ void mainMenu(Tour* ptr, int n)
 {
     // print the main menu
     clearAndPrintHeader("Main Menu");
-    printf("%d\n", n);
     puts("1. Calculate standings of a new competition");
     puts("2. See previous competitions' standings");
-    puts("3. See previous competitions' match history");
-    puts("4. Help");
+    puts("3. Help");
+    puts("4. About");
     puts("5. Exit the program");
 
     // get the input from the user
@@ -108,13 +145,13 @@ void mainMenu(Tour* ptr, int n)
             calcStandings(ptr, n);
             break;
         case '2':
-            // showPrevStandings();
+            showPrevStandings(ptr, n);
             break;
         case '3':
-            // showPrevMatchHistory();
+            helpMainMenu(ptr, n);
             break;
         case '4':
-            // helpMenu();
+            aboutMenu(ptr, n);
             break;
         case '5':
             exitMenu();
@@ -138,7 +175,6 @@ void calcStandings(Tour* ptr, int n)
 
     // asking for tournament name
     clearAndPrintHeader("Input tournament's data");
-    printf("%d\n", n);
     printf("Enter the tournament name:\n");
     printf(">> ");
     fflush(stdin);
@@ -317,7 +353,7 @@ void calcStandings(Tour* ptr, int n)
         ptr[n].teams[i].points = (ptr[n].teams[i].wins * 3) + ptr[n].teams[i].draws;
     }
 
-    standingsMenu(ptr, n);
+    standingsMenu(ptr, n, -1);
 }
 
 void showStandingsTable(Tour* ptr, int n)
@@ -388,19 +424,26 @@ void showStandingsTable(Tour* ptr, int n)
     printf("+\n");
 }
 
-void standingsMenu(Tour* ptr, int n)
+void standingsMenu(Tour* ptr, int n, int tour_index)
 {
     int target_index;
     int target_rank;
+    int temp_index;
     char header_str[40];
 
-    // sort based on points
-    sortTeamsByRank(ptr, n, "desc");
+    temp_index = tour_index;
+    if (tour_index == -1)
+    {
+        tour_index = n;
+    }
 
-    strcpy(header_str, ptr[n].name);
+    // sort based on points
+    sortTeamsByRank(ptr, tour_index, "desc");
+
+    strcpy(header_str, ptr[tour_index].name);
     strcat(header_str, " Table");
     clearAndPrintHeader(header_str);
-    showStandingsTable(ptr, n);
+    showStandingsTable(ptr, tour_index);
     printf("\n >> Menu Options <<\n");
     printf("1. Search by team name\n");
     printf("2. Search by ranking\n");
@@ -412,52 +455,52 @@ void standingsMenu(Tour* ptr, int n)
     switch(getch())
     {
         case '1':
-            target_index = searchAndPickTeam(ptr, n);
+            target_index = searchAndPickTeam(ptr, tour_index);
             if (target_index == -1)
             {
-                standingsMenu(ptr, n);
+                standingsMenu(ptr, n, temp_index);
                 break;
             }
-            showTeamDetails(ptr, n, target_index);
-            printf("\nPress any key to go back... ");
+            showTeamDetails(ptr, tour_index, target_index);
+            printf("\n(Press any key to go back...) ");
             getch();
-            standingsMenu(ptr, n);
+            standingsMenu(ptr, n, temp_index);
             break;
         case '2':
             clearAndPrintHeader(header_str);
-            showStandingsTable(ptr, n);
+            showStandingsTable(ptr, tour_index);
             printf("\nEnter your desired ranking position : \n");
             printf(">> ");
             scanf("%d", &target_rank);
-            target_index = getIndexFromRank(ptr, n, target_rank);
+            target_index = getIndexFromRank(ptr, tour_index, target_rank);
             if (target_index == -1)
             {
                 printf("\nInvalid ranking position!\n");
                 anyKey();
-                standingsMenu(ptr, n);
+                standingsMenu(ptr, n, temp_index);
                 break;
             }
-            showTeamDetails(ptr, n, target_index);
-            printf("\nPress any key to go back... ");
+            showTeamDetails(ptr, tour_index, target_index);
+            printf("\n(Press any key to go back...) ");
             getch();
-            standingsMenu(ptr, n);
+            standingsMenu(ptr, n, temp_index);
             break;
         case '3':
             // show match details w/ "scroll"
-            showMatchDetails(ptr, n, 0, "scroll");
-            standingsMenu(ptr, n);
+            showMatchDetails(ptr, tour_index, 0, "scroll");
+            standingsMenu(ptr, n, temp_index);
             break;
         case '4':
             // go to help menu
             helpStandingsMenu();
-            standingsMenu(ptr, n);
+            standingsMenu(ptr, n, temp_index);
             break;
         case '5':
             // exit to main menu
             mainMenu(ptr, n);
             break;
         default :
-            standingsMenu(ptr, n);
+            standingsMenu(ptr, n, temp_index);
             break;
     }
 }
@@ -559,10 +602,10 @@ void showMatchDetails(Tour* ptr, int n, int match_num, char* mode)
     // mode -> 0    ; disables scrolling
     if (strcmp(mode, "scroll") == 0)
     {
-        printf("\t<<\t%d/%d\t>>\n\n", match_num+1, ptr[n].num_matches);
+        printf("\t<<   %d/%d   >>\n\n", match_num+1, ptr[n].num_matches);
     }
     printf(" >> Match Details << \n");
-    printf("Tournament: %s\n", ptr[n].name);
+    printf("\nTournament: %s\n", ptr[n].name);
     printf(
         ">> %s VS %s <<\n",
         ptr[n].matches[match_num].teamA_name,
@@ -602,7 +645,7 @@ void showMatchDetails(Tour* ptr, int n, int match_num, char* mode)
     // in mode -> "scroll", enables scrolling with arrow keys
     if (strcmp(mode, "scroll") == 0)
     {
-        printf("\n(Press arrow keys to scroll through matches or press q to exit...)\n");
+        printf("\n(Use arrow keys to scroll through matches or press q to exit...)\n");
         switch(inputArrowKey()) // ask for arrow key input
         {
             case 1: case 2: // go to the left page
@@ -618,9 +661,32 @@ void showMatchDetails(Tour* ptr, int n, int match_num, char* mode)
     }
 }
 
-void showPrevMatchHistory(Tour* ptr, int n)
+void showPrevStandings(Tour* ptr, int n)
 {
-    
+    int i, input, flag = 0;
+    do 
+    {
+        clearAndPrintHeader("Previous Tournament Standings");
+        printf("List of previous tournaments:\n");
+        for (i = 0; i < n+1; i++)
+        {
+            printf(" %d. %s\n", i+1, ptr[i].name);
+        }
+        printf("\nEnter the number of the tournament you want to view: ");
+        scanf("%d", &input);
+        if (input < 1 || input > n+1)
+        {
+            clearAndPrintHeader("Previous Tournament Standings");
+            printf("\nInvalid input!\n");
+            anyKey();
+            flag = 1;
+        }
+        else
+        {
+            flag = 0;
+        }
+    } while (flag != 0);
+    standingsMenu(ptr, n, input-1);
 }
 
 int searchAndPickTeam(Tour* ptr, int n)
@@ -686,6 +752,20 @@ int getIndexFromRank(Tour* ptr, int n, int team_rank)
         }
     }
     return -1;
+}
+
+void swapAdjacentTeams(Tour* ptr, int n, int j)
+{
+    char tempStr[35];
+    Team temp;
+
+    temp = ptr[n].teams[j];
+    ptr[n].teams[j] = ptr[n].teams[j+1];
+    ptr[n].teams[j+1] = temp;
+
+    strcpy(tempStr, ptr[n].name_teams[j]);
+    strcpy(ptr[n].name_teams[j], ptr[n].name_teams[j+1]);
+    strcpy(ptr[n].name_teams[j+1], tempStr);
 }
 
 void sortTeamsByRank(Tour* ptr, int n, char* mode)
@@ -757,43 +837,49 @@ void sortTeamsByRank(Tour* ptr, int n, char* mode)
     }
 }
 
-void helpMainMenu(Tour* ptr, int n)
-{
-    
-}
 
 void helpStandingsMenu()
 {
     clearAndPrintHeader("Help - Standings Menu");
-    printf("HELP MENU WIP\n");
+    printf("You can choose several options in this menu to see a more detailed information of the tournament.\n");
+    printf("You are also able to utilize the search function to search for a team by name or rank.\n");
+    printf(" - Choose option 1 to search the team name you want and get the particular team details.\n");
+    printf(" - Choose option 2 to input the rank order based on the standings table and get the team details.\n");
+    printf(" - Choose option 3 to get the match details.\n");
+    printf(" - Choose option 4 to get the user manual written for you.\n");
+    printf(" - Choose option 5 to go back to the main menu.\n");
     printf("\nPress any key to exit... ");
     getch();
     system("cls");
 }
 
-void moreInfo(Tour* ptr, int n)
+void helpMainMenu(Tour* ptr, int n)
 {
+    clearAndPrintHeader("Help - Main Menu");
+    puts(" - Choose option 1 to make a football standings table based on the competition, teams, and goals that you have input.");
+    puts(" - Choose option 2 to see the previous competition's standings table.");
+    puts(" - Choose option 3 to read this user manual.");
+    puts(" - Choose option 4 to read this program's about page.");
+    puts(" - Choose option 5 to exit the program.");
+    printf("\nPress any key to exit... ");
+    getch();
+    mainMenu(ptr, n);
+}
 
+void aboutMenu(Tour* ptr, int n)
+{
+    clearAndPrintHeader("About This Program");
+    printf("This program is made by as for the mid-term project on the 2nd semester in 2022 at the University of Indonesia\n");
+    printf("In this program, the user are excpected to make a football standings table and a few extra details along with it\n");
+    printf("Any use and further copies of this program are expectec to be allowed\n");
+
+    
 }
 
 void exitMenu()
 {
     clearAndPrintHeader("");
     printf("Thank you for using this program!\n");
-    printf("See you next time\n");
+    printf("See you next time!\n");
     exit(0);
-}
-
-void swapAdjacentTeams(Tour* ptr, int n, int j)
-{
-    char tempStr[35];
-    Team temp;
-
-    temp = ptr[n].teams[j];
-    ptr[n].teams[j] = ptr[n].teams[j+1];
-    ptr[n].teams[j+1] = temp;
-
-    strcpy(tempStr, ptr[n].name_teams[j]);
-    strcpy(ptr[n].name_teams[j], ptr[n].name_teams[j+1]);
-    strcpy(ptr[n].name_teams[j+1], tempStr);
 }
