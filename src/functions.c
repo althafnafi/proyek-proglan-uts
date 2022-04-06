@@ -128,11 +128,12 @@ void mainMenu(Tour* ptr, int n)
 {
     // print the main menu
     clearAndPrintHeader("Main Menu");
-    puts("1. Calculate standings of a new competition");
-    puts("2. See previous competitions' standings");
-    puts("3. Help");
-    puts("4. About");
-    puts("5. Exit the program");
+    printf("%d\n", n);
+    puts(" 1. Calculate standings of a new competition");
+    puts(" 2. See previous competitions' standings");
+    puts(" 3. Help");
+    puts(" 4. About");
+    puts(" 5. Exit the program");
 
     // get the input from the user
     puts("Enter the desired menu: ");
@@ -846,6 +847,7 @@ void sortTeamsByRank(Tour* ptr, int n, char* mode)
 void helpStandingsMenu()
 {
     clearAndPrintHeader("Help - Standings Menu");
+    printf("\n");
     printf("You can choose several options in this menu to see a more detailed information of the tournament.\n");
     printf("You are also able to utilize the search function to search for a team by name or rank.\n");
     printf(" - Choose option 1 to search the team name you want and get the particular team details.\n");
@@ -861,7 +863,8 @@ void helpStandingsMenu()
 void helpMainMenu(Tour* ptr, int n)
 {
     clearAndPrintHeader("Help - Main Menu");
-    puts(" - Choose option 1 to make a football standings table based on the competition, teams, and goals that you have input.");
+    printf("\n");
+    puts(" - Choose option 1 to make a football standings table based on the\n   competitions, teams, and goals that you have input.");
     puts(" - Choose option 2 to see the previous competition's standings table.");
     puts(" - Choose option 3 to read this user manual.");
     puts(" - Choose option 4 to read this program's about page.");
@@ -874,11 +877,16 @@ void helpMainMenu(Tour* ptr, int n)
 void aboutMenu(Tour* ptr, int n)
 {
     clearAndPrintHeader("About This Program");
-    printf("This program is made by as for the mid-term project on the 2nd semester in 2022 at the University of Indonesia\n");
-    printf("In this program, the user are excpected to make a football standings table and a few extra details along with it\n");
-    printf("Any use and further copies of this program are expectec to be allowed\n");
-
-    
+    printf("\n");
+    printf(" - This program is made by as for the mid-term project on the\n");
+    printf("   2nd semester in 2022 at the University of Indonesia\n");
+    printf(" - In this program, the user are excpected to make a football\n");
+    printf("   standings table and a few extra details along with it\n");
+    printf(" - Any use and further copies of this program are expectec to\n");
+    printf("   be allowed\n");
+    printf("\nPress any key to exit... ");
+    getch();
+    mainMenu(ptr, n);
 }
 
 void exitMenu()

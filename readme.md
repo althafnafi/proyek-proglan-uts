@@ -29,6 +29,7 @@ Proyek Tengah Semester Proglan
 - [ ] Sort the goals and scorers based on time of the goal
 - [X] Add a feature to differentiate goals between different teams
 - [ ] Add error handling to all getch() and scanf()
+- [ ] Fix infinite loop when going to second menu without any tournament added
 ## How to compile and run
 ```
 gcc -Wall -c functions.c && gcc -Wall -c main.c && gcc -o program functions.o main.o && program
