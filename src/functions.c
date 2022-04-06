@@ -317,11 +317,11 @@ void calcStandings(Tour* ptr, int n)
 }
 
 void showStandingsTable(Tour* ptr, int n)
-{   
+{
     int i, j;
     int printL;
 
-    if (maxLength(ptr[n].name_teams) <= 10)
+    if (maxLength(ptr[n].name_teams) <= 9)
         printL = 11;
     else
         printL = (maxLength(ptr[n].name_teams));
@@ -329,13 +329,15 @@ void showStandingsTable(Tour* ptr, int n)
     // printing header for table
     // printing the team name header
     printf("+");
-    for (i = 0; i < printL+50; i++)
+    for (i = 0; i < printL+57; i++)
     {
         printf("-");
     }
     printf("+\n");
     printf("|");
 
+
+    printf(" Rank  ");
     // print "Team Name and the spaces beside it based on the max length of the team name"
     for (i = 0; i < floor(((float)printL-9)/2); i++)
         printf(" ");
@@ -345,20 +347,19 @@ void showStandingsTable(Tour* ptr, int n)
 
     // printing other headers
     printf("%8s%5s%5s%5s%6s%6s%6s%8s |","GP", "W", "D", "L", "GF", "GA", "GD", "Pts");
-
-    
     printf("\n+");
-    for (i = 0; i < printL+50; i++)
+    for (i = 0; i < printL+57; i++)
     {
         printf("=");
     }
     printf("+");
+
     // printing the details for each team
     for (i = 0; i < ptr[n].num_teams; i++)
     {
         // printing the team name column
-        printf("\n");
-        printf("| %s", ptr[n].name_teams[i]);
+        printf("\n| %2d", ptr[n].teams[i].rank);
+        printf("     %s", ptr[n].name_teams[i]);
         for (j = 0; j < printL-strlen(ptr[n].name_teams[i]); j++)
         {
             printf(" ");
@@ -376,7 +377,7 @@ void showStandingsTable(Tour* ptr, int n)
         );
     }
     printf("\n+");
-    for (i = 0; i < printL+50; i++)
+    for (i = 0; i < printL+57; i++)
     {
         printf("-");
     }
@@ -388,11 +389,15 @@ void standingsMenu(Tour* ptr, int n)
     int target_index;
     int target_rank;
     char header_str[40];
+
+    // sort based on points
+    sortTeamsByRank(ptr, n, "desc");
+
     strcpy(header_str, ptr[n].name);
     strcat(header_str, " Table");
     clearAndPrintHeader(header_str);
     showStandingsTable(ptr, n);
-    printf("\nSearching Options\n");
+    printf("\n >> Searching Options <<\n");
     printf("1. Search by team name\n");
     printf("2. Search by ranking\n");
     printf("3. Help\n");
@@ -456,7 +461,8 @@ void showTeamDetails(Tour* ptr, int n, int team_index)
     printf(" - Points: %d\n", ptr[n].teams[team_index].points);
 }
 
-void search(char arr[][35], char target[], int return_index[11], int size) {
+void search(char arr[][35], char target[], int return_index[11], int size)
+{
     // this search function will return the index of the team in the array
     // if the substring is found
     int i, j, count = 0, count_index = 0, flag = 0;
@@ -737,5 +743,12 @@ void sortTeamsByRank(Tour* ptr, int n, char* mode)
         }
     }
 
-}
+    for (i = 0; i < ptr[n].num_teams; i++)
+    {
+        if (strcmp(mode, "asc") == 0)
+            ptr[n].teams[i].rank = ptr[n].num_teams-i;
 
+        else if (strcmp(mode, "desc") == 0)
+            ptr[n].teams[i].rank = i+1;
+    }
+}
