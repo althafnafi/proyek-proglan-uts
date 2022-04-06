@@ -677,6 +677,7 @@ void showPrevStandings(Tour* ptr, int n)
             printf(" %d. %s\n", i+1, ptr[i].name);
         }
         printf("\nEnter the number of the tournament you want to view: ");
+        fflush(stdin);
         scanf("%d", &input);
         if (input < 1 || input > n+1)
         {
