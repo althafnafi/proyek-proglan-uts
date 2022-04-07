@@ -924,7 +924,7 @@ void aboutMenu(Tour* ptr, int n)
     printf("   2nd semester in 2022 at the University of Indonesia\n");
     printf(" - In this program, the user are excpected to make a football\n");
     printf("   standings table and a few extra details along with it\n");
-    printf(" - Any use and further copies of this program are expectec to\n");
+    printf(" - Any use and further copies of this program are expected to\n");
     printf("   be allowed\n");
     printf("\nPress any key to exit... ");
     getch();
