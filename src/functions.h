@@ -1,6 +1,9 @@
 #ifndef FUNCTIONS_H
 #define FUNCTIONS_H
 
+// struct definitions
+
+// struct to store the details of a match
 typedef struct matchDetails 
 {
     // teams[0] -> first team; teams[1] -> second team
@@ -17,6 +20,7 @@ typedef struct matchDetails
     int input_status;
 } Match;
 
+// struct to store the details of a team
 typedef struct teams 
 {
     char name[35];
@@ -31,6 +35,8 @@ typedef struct teams
     int rank;
 } Team;
 
+// struct to store the details of a tournament
+// with nested structs inside
 typedef struct tournaments 
 {
     char name[35];
@@ -71,23 +77,25 @@ void search(char arr[][35], char target[], int return_index[11], int size);
 void showTournamentDetails(Tour* ptr, int n);
 // to print the details of a match
 void showMatchDetails(Tour* ptr, int n, int match_num, char* mode);
-
+// print the menu to show previous tournaments' standings
 void showPrevStandings(Tour* ptr, int n);
-
+// function that calls the search algorithm and get search suggestions based on that
 int searchAndPickTeam(Tour* ptr, int n);
-
+// get team index from team rankings inputted by the user
 int getIndexFromRank(Tour* ptr, int n, int team_rank);
-
+// swap two adjacent team structs used in bubble sort
 void swapAdjacentTeams(Tour* ptr, int n, int j);
-
-void sortTeamsByRank(Tour* ptr, int n, char* mode);
-
+// sort teams based on points and goal difference
+void sortTeamsByRank(Tour* ptr, int n, int size, char* mode);
+// function to set the rankings of teams based on their sorted index
+void setRankings(Tour* ptr, int n, char* mode);
+// print the help menu in main
 void helpMainMenu(Tour* ptr, int n);
-
+// print the help menu in standings
 void helpStandingsMenu();
-
+// print the about menu in main menu
 void aboutMenu(Tour* ptr, int n);
-
+// print the exit menu in main menu
 void exitMenu();
 
 #endif
