@@ -11,6 +11,7 @@ void welcomeScreen()
     system("cls");
     printf("\n");
     printf("  +===============================================+\n");
+    printf("  |             << WELCOME TO THE >>              |\n");
     printf("  |      << Football Standings Calculator >>      |\n");
     printf("  |                   Made by:                    |\n");
     printf("  |       Adrien Ardra Ramadhan (2106731485)      |\n");
@@ -128,7 +129,6 @@ void mainMenu(Tour* ptr, int n)
 {
     // print the main menu
     clearAndPrintHeader("Main Menu");
-    printf("%d\n", n);
     puts(" 1. Calculate standings of a new competition");
     puts(" 2. See previous competitions' standings");
     puts(" 3. Help");
@@ -155,7 +155,7 @@ void mainMenu(Tour* ptr, int n)
             aboutMenu(ptr, n);
             break;
         case '5':
-            exitMenu();
+            exitMenu(ptr, n);
             break;
         default:
             mainMenu(ptr, n);
@@ -218,7 +218,7 @@ void calcStandings(Tour* ptr, int n)
         strcpy(ptr[n].teams[i].name, ptr[n].name_teams[i]);
     }
 
-    // for loop to zero every thing out in the struct
+    // for loop to zero every thing out in the teams struct
     for (i = 0; i < ptr[n].num_teams; i++) 
     {
         ptr[n].teams[i].games_played = 0;
@@ -230,34 +230,67 @@ void calcStandings(Tour* ptr, int n)
         ptr[n].teams[i].points = 0;
     }
 
+    // for loop to set -1 as defaut score (used for error handling)
+    for (i = 0; i < ptr[n].num_matches; i++)
+    {
+        ptr[n].matches[match_num].teamA_score = -1;
+        ptr[n].matches[match_num].teamB_score = -1;
+    }
+
     // for loops to ask for the scores of each match
     for (i = 0; i < ptr[n].num_teams; i++)
     {
         for (j = i+1; j < ptr[n].num_teams; j++) 
         {
-            // print header
-            clearAndPrintHeader("Input tournament's data");
+            
+            do
+            {
+                // print header
+                clearAndPrintHeader("Input tournament's data");
 
-            // print match overview
-            printf("\nMatch %d:\n", match_num+1);
-            strcpy(ptr[n].matches[match_num].teamA_name, ptr[n].name_teams[i]);
-            strcpy(ptr[n].matches[match_num].teamB_name, ptr[n].name_teams[j]);
-            printf(
-                ">> %s VS %s <<\n",
-                ptr[n].matches[match_num].teamA_name,
-                ptr[n].matches[match_num].teamB_name
-            );
+                // print match overview
+                printf("\nMatch %d:\n", match_num+1);
+                strcpy(ptr[n].matches[match_num].teamA_name, ptr[n].name_teams[i]);
+                strcpy(ptr[n].matches[match_num].teamB_name, ptr[n].name_teams[j]);
+                printf(
+                    ">> %s VS %s <<\n",
+                    ptr[n].matches[match_num].teamA_name,
+                    ptr[n].matches[match_num].teamB_name
+                );
 
-            // INPUT details of goals
-            // from team A
-            printf("How many goals did %s score?\n", ptr[n].matches[match_num].teamA_name);
-            printf(">> ");
-            scanf("%d", &ptr[n].matches[match_num].teamA_score);
-            // from team B
-            printf("How many goals did %s score?\n", ptr[n].matches[match_num].teamB_name);
-            printf(">> ");
-            scanf("%d", &ptr[n].matches[match_num].teamB_score);
-
+                // INPUT details of goals
+                // from team A
+                
+                printf("How many goals did %s score?\n", ptr[n].matches[match_num].teamA_name);
+                printf(">> ");
+                fflush(stdin);
+                scanf("%d", &ptr[n].matches[match_num].teamA_score);
+                fflush(stdin);
+                if (ptr[n].matches[match_num].teamA_score < 0)
+                {
+                    invalid = 1;
+                    puts("\nThe number you entered was invalid!");
+                    puts("Enter a number greater than or equal to 0!\n");
+                    anyKey();
+                    continue;
+                }
+                // from team B
+                printf("How many goals did %s score?\n", ptr[n].matches[match_num].teamB_name);
+                printf(">> ");
+                scanf("%d", &ptr[n].matches[match_num].teamB_score);
+                fflush(stdin);
+                if (ptr[n].matches[match_num].teamB_score < 0)
+                {
+                    invalid = 1;
+                    puts("\nThe number you entered was invalid!");
+                    puts("Enter a number greater than or equal to 0!");
+                    puts("Resetting input...\n");
+                    anyKey();
+                    continue;
+                }
+                // if the scores are valid, break the loop
+                invalid = 0;
+            } while (invalid == 1);
             // calculate the details for each category and points
             // for team A
             ptr[n].teams[i].games_played++;
@@ -603,12 +636,13 @@ void showMatchDetails(Tour* ptr, int n, int match_num, char* mode)
     }
     // print the header
     clearAndPrintHeader("");
-    // mode -> 1    ; enable scrolling through matches in a tournament
-    // mode -> 0    ; disables scrolling
+    // mode -> "scroll"    ; enable scrolling through matches in a tournament
+    // mode -> ""    ; disables scrolling
     if (strcmp(mode, "scroll") == 0)
     {
         printf("\t<<   %d/%d   >>\n\n", match_num+1, ptr[n].num_matches);
     }
+
     printf(" >> Match Details << \n");
     printf("\nTournament: %s\n", ptr[n].name);
     printf(
@@ -669,6 +703,14 @@ void showMatchDetails(Tour* ptr, int n, int match_num, char* mode)
 void showPrevStandings(Tour* ptr, int n)
 {
     int i, input, flag = 0;
+    if (n == -1)
+    {
+        clearAndPrintHeader("Previous Tournament Standings");
+        printf("No tournament has been created yet.\n");
+        printf("To create a new tournament go to the first menu in the main menu.\n\n");
+        anyKey();
+        mainMenu(ptr, n);
+    }
     do 
     {
         clearAndPrintHeader("Previous Tournament Standings");
@@ -889,10 +931,27 @@ void aboutMenu(Tour* ptr, int n)
     mainMenu(ptr, n);
 }
 
-void exitMenu()
+void exitMenu(Tour* ptr, int n)
 {
-    clearAndPrintHeader("");
-    printf("Thank you for using this program!\n");
-    printf("See you next time!\n");
-    exit(0);
+    char exit_choice[5];
+    do
+    {
+        fflush(stdin);
+        clearAndPrintHeader("Exit Menu");
+        printf("\n");
+        printf("Are you sure you want to exit the program (y/n)? ");
+        scanf("%s", exit_choice);
+    } while (strcmp("y", exit_choice) != 0 && strcmp("n", exit_choice) != 0);
+
+    if (strcmp("y", exit_choice) == 0)
+    {
+        clearAndPrintHeader("Exit Menu");
+        printf("\nThank you for using this program :)\n");
+        printf("See you next time!\n");
+        exit(0);
+    }
+    else
+    {
+        mainMenu(ptr, n);
+    }
 }

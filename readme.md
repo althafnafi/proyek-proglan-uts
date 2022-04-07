@@ -17,7 +17,7 @@ Proyek Tengah Semester Proglan
 - [X] Penggunaan Array 1D yang tepat
 - [X] Penggunaan Array 2D yang tepat
 - [X] Ada searching algorithm yang tepat
-- [ ] Ada sorting algorithm yang tepat
+- [X] Ada sorting algorithm yang tepat
 - [ ] Tidak ada error/bug dalam program
 - [ ] Tujuan aplikasi tercapai
 - [ ] Penilaian video (wajah, pembagian, penjelasan, semangat, waktu)
