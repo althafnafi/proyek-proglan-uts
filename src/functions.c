@@ -571,6 +571,7 @@ void standingsMenu(Tour* ptr, int n, int tour_index)
             // asks user for input of their desired ranking
             printf("\nEnter your desired ranking position : \n");
             printf(">> ");
+            fflush(stdin);
             scanf("%d", &target_rank);
             // determine the team's index by calling getIndexByRank
             target_index = getIndexFromRank(ptr, tour_index, target_rank);
@@ -622,14 +623,14 @@ void showTeamDetails(Tour* ptr, int n, int team_index)
             ptr[n].teams[team_index].rank
     );
     // print the team details
-    printf(" - Games Played: %d\n", ptr[n].teams[team_index].games_played);
-    printf(" - Wins\t: %d\n", ptr[n].teams[team_index].wins);
-    printf(" - Draws\t: %d\n", ptr[n].teams[team_index].draws);
-    printf(" - Losses\t: %d\n", ptr[n].teams[team_index].losses);
-    printf(" - Goals For\t: %d\n", ptr[n].teams[team_index].goals_for);
-    printf(" - Goals Against\t: %d\n", ptr[n].teams[team_index].goals_against);
-    printf(" - Goal Diff.\t: %d\n", ptr[n].teams[team_index].goal_difference);
-    printf(" - Points\t: %d\n", ptr[n].teams[team_index].points);
+    printf(" - Games Played  : %d\n", ptr[n].teams[team_index].games_played);
+    printf(" - Wins\t\t : %d\n", ptr[n].teams[team_index].wins);
+    printf(" - Draws\t : %d\n", ptr[n].teams[team_index].draws);
+    printf(" - Losses\t : %d\n", ptr[n].teams[team_index].losses);
+    printf(" - Goals For\t : %d\n", ptr[n].teams[team_index].goals_for);
+    printf(" - Goals Against : %d\n", ptr[n].teams[team_index].goals_against);
+    printf(" - Goal Diff.\t : %d\n", ptr[n].teams[team_index].goal_difference);
+    printf(" - Points\t : %d\n", ptr[n].teams[team_index].points);
 }
 
 void search(char arr[][35], char target[], int return_index[11], int size)
