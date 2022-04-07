@@ -1026,13 +1026,17 @@ void aboutMenu(Tour* ptr, int n)
     // print the about page
     clearAndPrintHeader("About This Program");
     printf("\n");
+    printf(" - This program was made to help users make a football standings table based on the\n");
+    printf("   competitions, teams, and goals.\n");
     printf(" - This program is made by as for the mid-term project on the\n");
     printf("   2nd semester in 2022 at the University of Indonesia\n");
     printf(" - In this program, the user are excpected to make a football\n");
     printf("   standings table and a few extra details along with it\n");
     printf(" - Any use and further copies of this program are expected to\n");
-    printf("   be allowed\n");
-    printf("\nPress any key to exit... ");
+    printf("   be allowed\n\n");
+    printf("This program is made by:\n");
+    printf("Adrien Adri Ramadhan, Althaf Nafi Anwar, and Muhammad Suhaili\n");
+    printf("Press any key to exit... ");
     getch();
     mainMenu(ptr, n);
 }
