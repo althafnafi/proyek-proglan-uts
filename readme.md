@@ -31,6 +31,10 @@ Proyek Tengah Semester Proglan
 - [X] Add a feature to differentiate goals between different teams
 - [ ] Add error handling to all getch() and scanf()
 - [ ] Fix infinite loop when going to second menu without any tournament added
+## Things to Add for UAS!
+- [ ] Binary Tree w/ add/insert, search, delete, sort
+- [ ] Gunakan linked list untuk array tournament + fungsi add, delete & sort based on alphabet
+
 ## How to compile and run
 ```
 gcc -Wall -c functions.c && gcc -Wall -c main.c && gcc -o program functions.o main.o && program
